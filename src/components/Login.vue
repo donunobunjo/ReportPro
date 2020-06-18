@@ -41,8 +41,6 @@ export default {
 
 <style scoped>
 #main{
-    /* height: 700px; */
     background-image: url("../assets/milkyway.jpeg");
-    /* background-repeat: repeat-y; */
 }
 </style>

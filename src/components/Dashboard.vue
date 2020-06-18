@@ -1,14 +1,16 @@
 <template>
     <el-container style="height: 500px; border: 1px solid #eee">
   <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-    <el-menu :default-openeds="['1', '3']" :router="routing">
+    <!-- <el-menu :default-openeds="['1', '3']" :router="routing"> -->
+    <el-menu :router="routing">
       <el-submenu index="1">
         <template slot="title"><i class="el-icon-message"></i>Registration</template>
         <el-menu-item-group>
           <template slot="title">New</template>
           <el-menu-item index="1-1" route="/dashboard/opt1">Student</el-menu-item>
-          <el-menu-item index="1-2">Subject</el-menu-item>
-          <el-menu-item index="1-2">Class</el-menu-item>
+          <el-menu-item index="1-2" route="/dashboard/subject">Subject</el-menu-item>
+          <el-menu-item index="1-2" route="/dashboard/class">Class</el-menu-item>
+          
         </el-menu-item-group>
         <!-- <el-menu-item-group title="Exam/C.A.">
           <el-menu-item index="1-3">Option 3</el-menu-item>
