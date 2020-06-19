@@ -7,7 +7,7 @@
         <template slot="title"><i class="el-icon-message"></i>Registration</template>
         <el-menu-item-group>
           <template slot="title">New</template>
-          <el-menu-item index="1-1" route="/dashboard/opt1">Student</el-menu-item>
+          <el-menu-item index="1-1" route="/dashboard/student">Student</el-menu-item>
           <el-menu-item index="1-2" route="/dashboard/subject">Subject</el-menu-item>
           <el-menu-item index="1-2" route="/dashboard/class">Class</el-menu-item>
           

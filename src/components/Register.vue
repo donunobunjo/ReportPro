@@ -35,7 +35,7 @@
 						<input type="password" class="form-control" placeholder="confirm password">
 					</div>
 					<div class="form-group">
-						<input type="submit" value="Register" class="btn btn-primary float-right login_btn">
+						<input type="button" value="Register" class="btn btn-primary float-right">
 					</div>
 				</form>
 			</div>

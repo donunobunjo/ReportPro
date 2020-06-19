@@ -22,7 +22,7 @@
 						<input type="password" class="form-control" placeholder="password">
 					</div>
 					<div class="form-group">
-						<input type="submit" value="Login" class="btn btn-primary float-right login_btn">
+						<input type="button" value="Login" class="btn btn-primary float-right">
 					</div>
 				</form>
 			</div>

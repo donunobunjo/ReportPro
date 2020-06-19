@@ -12,7 +12,7 @@
 				<!-- <a href="index.html" class="logo">ReportPro</a> -->
 				<nav class="right">
 					<!-- <a href="#" class="button alt">Log in</a> -->
-          <router-link to="/login" class="cred">Login</router-link>
+          <router-link to="/login" class="cred">Sign In</router-link>
           <router-link to="/register" class="cred">Register</router-link>
 				</nav>
 		</header>
