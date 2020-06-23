@@ -6,6 +6,7 @@ import DashboardHome from './components/DashboardHome.vue'
 import Subject from './components/Subject.vue'
 import Student from './components/Student.vue'
 import Class from './components/Class.vue'
+import Session from './components/Session.vue'
 export default [
     {
         name:'home',
@@ -30,7 +31,8 @@ export default [
             {path:'student',component:Student},
             {path:'/',component:DashboardHome},
             { path: 'subject', component:Subject },
-            { path: 'class', component:Class }
+            { path: 'class', component:Class },
+            { path:'session', component:Session}
         ]
     }
 ]

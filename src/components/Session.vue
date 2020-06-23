@@ -3,18 +3,16 @@
         <div class="row justify-content-center">
             <div class="card card-default col-md-8">
                 <div class="card-header">
-                    <h3>Register new subject</h3>
+                    <h3>Register new session</h3>
                 </div>
                 <div class="card-body">
                     <form id="frm">
                         <div class="row form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" class="form-control frminput" placeholder="New subject ..." v-model='subject.subject'>
-                            <span v-if="error.errSubject" class="err">{{error.errSubject}}</span>
+                            <label for="subject">Session</label>
+                            <input type="text" id="session" class="form-control frminput" placeholder="New session ...">
                         </div>
                         <div class="form-group">
-                            <input type="button" value="Add" @click="add" class="btn btn-primary float-right">
-                            
+                            <input type="button" value="Add" class="btn btn-primary float-right">
                         </div>
                     </form>
                     <hr>
@@ -53,36 +51,7 @@
 </template>
 
 <script>
- import baseurl from './baseURL';
 export default {
-    data () {
-        return {
-            subject:{
-                subject:''
-            },
-            error:{
-                errSubject:''
-            },
-            subjects:[]
-        }
-    },
-    methods:{
-        add(){
-            // console.log('hahahahah')
-            if(this.subject==''){
-                this.error.errSubject='Enter a subject'
-                setTimeout(()=>{
-                    this.error.errSubject=''
-                },4000)
-                return false 
-            }
-            //console.log(this.subject)
-            this.axios.post(baseurl+'/subject',this.subject)
-            .then((res)=>{
-                console.log(res)
-            })
-        }
-    }
     
 }
 </script>
@@ -90,9 +59,6 @@ export default {
 <style scoped>
     .frminput{
             border-radius: 30px;
-    }
-    .err{
-        color: red;
     }
     
 </style>

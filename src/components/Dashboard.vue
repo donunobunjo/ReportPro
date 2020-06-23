@@ -9,7 +9,8 @@
           <template slot="title">New</template>
           <el-menu-item index="1-1" route="/dashboard/student">Student</el-menu-item>
           <el-menu-item index="1-2" route="/dashboard/subject">Subject</el-menu-item>
-          <el-menu-item index="1-2" route="/dashboard/class">Class</el-menu-item>
+          <el-menu-item index="1-3" route="/dashboard/class">Class</el-menu-item>
+          <el-menu-item index="1-4" route="/dashboard/session">Session</el-menu-item>
           
         </el-menu-item-group>
         <!-- <el-menu-item-group title="Exam/C.A.">
