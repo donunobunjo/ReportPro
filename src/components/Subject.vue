@@ -13,7 +13,6 @@
                             <span v-if="error.errSubject" class="err">{{error.errSubject}}</span>
                         </div>
                         <div class="form-group">
-                            <!-- <input type="button" value="Add" @click="add" class="btn btn-primary float-right"> -->
                             <el-row>
                                 <b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner>
                                 <el-button type="success" @click="add" icon="el-icon-check" circle class="float-right">Add</el-button>
@@ -37,12 +36,26 @@
                                         {{subject.subject}}
                                     </td>
                                     <td>
-                                        <el-button type="primary" icon="el-icon-edit" circle></el-button>
-                                        <el-button type="danger" icon="el-icon-delete" circle  @click="destroy(subject)"></el-button>
+                                        <el-button type="primary" icon="el-icon-edit" circle @click.prevent="edit(subject)"></el-button>
+                                        <el-button type="danger" icon="el-icon-delete" circle  @click.prevent="destroy(subject)"></el-button>
                                     </td>
+                                     <el-dialog v-if="editID" :visible.sync="editDialogVisible">
+                                        <form>
+                                            <div class="row form-group">
+                                                <label for="currentSubject">Subject</label>
+                                                <input type="text" id="currentSubject" class="form-control frminput" placeholder="Subject ..." v-model='currentSubject.subject' ref="subj">
+                                                <span v-if="error.errCurrentSubject" class="err">{{error.errCurrentSubject}}</span>
+                                            </div>
+                                            <div>
+                                                <el-button type="primary" icon="el-icon-close" circle class="float-right dia" @click.prevent='cancel'></el-button>
+                                                <el-button type="primary" icon="el-icon-check" circle class="float-right dia" @click.prevent="update(currentSubject)"></el-button>
+                                            </div>
+                                        </form>
+                                    </el-dialog>
                                 </tr>
                             </tbody>
                         </table>
+                       
                     </div>
                 </div>
             </div>
@@ -60,11 +73,19 @@ export default {
                 subject:''
             },
             error:{
-                errSubject:''
+                errSubject:'',
+                errCurrentSubject:''
             },
             subjects:[],
-            spinner:false
+            spinner:false,
+            editID:'',
+            initialSubject:{},
+            currentSubject:{},
+            editDialogVisible:false
         }
+    },
+    watch:{
+        
     },
     methods:{
         add(){
@@ -75,15 +96,57 @@ export default {
                 },4000)
                 return false 
             }
+            const subjectInput = this.subjects.filter(sub=>sub.subject==this.subject.subject)
+            if(subjectInput.length>0){
+                this.error.errSubject='Subject already exist'
+                setTimeout(()=>{
+                    this.error.errSubject=''
+                },4000)
+                return false 
+            }
             this.spinner=true
+
             this.axios.post(baseurl+'/subject',this.subject)
             .then((res)=>{
                 this.subjects.splice(0,0,res.data.subject)
                 this.subject.subject=''
                 this.spinner=false
-                this.$refs.subj.focus()
+                // this.$refs.subj.focus()
                 
             })
+        },
+        edit(subject){
+            this.editID= subject.id
+            this.initialSubject=subject
+            this.currentSubject.id =subject.id
+            this.currentSubject.subject = subject.subject
+            this.editDialogVisible=true
+        },
+        update(subject){
+            if(this.currentSubject.subject==''){
+                this.error.errCurrentSubject='Enter a subject'
+                setTimeout(()=>{
+                    this.error.errCurrentSubject=''
+                },4000)
+                return false 
+            }
+            const subjectInput = this.subjects.filter(sub=>sub.subject==this.currentSubject.subject)
+            // if(subjectInput.length>0 && this.currentSubject!=subjectInput[0].subject){
+            if(subjectInput.length>0){
+                this.error.errCurrentSubject='Subject already exist'
+                setTimeout(()=>{
+                    this.error.errCurrentSubject=''
+                },4000)
+                return false 
+            }
+            this.axios.put(baseurl+'/subject/'+subject.id,this.currentSubject)
+            .then(res=>{
+                this.subjects.splice(this.subjects.indexOf(this.initialSubject), 1,res.data.newsubject);
+                this.editDialogVisible=false
+            })
+        },
+        cancel(){
+            this.editDialogVisible=false
         },
         destroy(subject){
             swal({
@@ -104,9 +167,7 @@ export default {
                     swal("Subject deleted successfully!", {
                     icon: "success",
                     });
-                } else {
-                    //swal("Your imaginary file is safe!");
-                }
+                } 
             });
 
         }
@@ -131,5 +192,7 @@ export default {
     .err{
         color: red;
     }
-    
+    .dia{
+        margin-bottom: 20px;
+    }
 </style>
