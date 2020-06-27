@@ -9,7 +9,7 @@
                     <form id="frm">
                         <div class="row form-group">
                             <label for="subject">Subject</label>
-                            <input type="text" id="subject" class="form-control frminput" placeholder="New subject ..." v-model='subject.subject' ref="subj">
+                            <input type="text" id="subject" class="form-control frminput" placeholder="New subject ..." v-model='subject.subject' @input="subject.subject=$event.target.value.toUpperCase()">
                             <span v-if="error.errSubject" class="err">{{error.errSubject}}</span>
                         </div>
                         <div class="form-group">
@@ -43,7 +43,7 @@
                                         <form>
                                             <div class="row form-group">
                                                 <label for="currentSubject">Subject</label>
-                                                <input type="text" id="currentSubject" class="form-control frminput" placeholder="Subject ..." v-model='currentSubject.subject' ref="subj">
+                                                <input type="text" id="currentSubject" class="form-control frminput" placeholder="Subject ..." v-model='currentSubject.subject' @input="currentSubject.subject=$event.target.value.toUpperCase()">
                                                 <span v-if="error.errCurrentSubject" class="err">{{error.errCurrentSubject}}</span>
                                             </div>
                                             <div>
@@ -170,12 +170,20 @@ export default {
                 } 
             });
 
-        }
+        },
+        // change(){
+
+        // }
     },
     mounted(){
+        this.spinner=true
         this.axios.get(baseurl+'/subject')
         .then((res)=>{
             this.subjects = res.data.subjects
+            this.spinner=false
+            // this.subjects.sort(function(a, b){
+            //     return a.subject > b.subject;
+            // });
         })
         .catch((err)=>{
             console.log(err)
