@@ -66,6 +66,7 @@
 <script>
 import baseurl from './baseURL';
 import swal from 'sweetalert';
+import {mapState,mapActions} from 'vuex'
 export default {
     data () {
         return {
@@ -76,7 +77,7 @@ export default {
                 errSubject:'',
                 errCurrentSubject:''
             },
-            subjects:[],
+            // subjects:[],
             spinner:false,
             editID:'',
             initialSubject:{},
@@ -84,10 +85,15 @@ export default {
             editDialogVisible:false
         }
     },
+    computed:{
+        ...mapState(['subjects']),
+        
+    },
     watch:{
         
     },
     methods:{
+        ...mapActions(['getSubjects']),
         add(){
             if(this.subject.subject==''){
                 this.error.errSubject='Enter a subject'
@@ -176,18 +182,19 @@ export default {
         // }
     },
     mounted(){
-        this.spinner=true
-        this.axios.get(baseurl+'/subject')
-        .then((res)=>{
-            this.subjects = res.data.subjects
+         this.spinner=true
+        // this.axios.get(baseurl+'/subject')
+        // .then((res)=>{
+        //     this.subjects = res.data.subjects
+        //     this.spinner=false
+        // })
+        // .catch((err)=>{
+        //     console.log(err)
+        // })
+        this.getSubjects()
+        .then(
             this.spinner=false
-            // this.subjects.sort(function(a, b){
-            //     return a.subject > b.subject;
-            // });
-        })
-        .catch((err)=>{
-            console.log(err)
-        })
+        )
     }
     
 }
