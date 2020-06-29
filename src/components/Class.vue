@@ -9,38 +9,39 @@
                     <form id="frm">
                         <div class="row form-group">
                             <label for="class">Class</label>
-                            <input type="text" id="class" class="form-control frminput" placeholder="New class ...">
+                            <input type="text" id="class" class="form-control frminput" placeholder="New class ..." v-model='classs.classs' @input="classs.classs=$event.target.value.toUpperCase()">
+                            <span v-if="error.errClass" class="err">{{error.errClass}}</span>
                         </div>
                         <div class="form-group">
-                            <input type="button" value="Add" class="btn btn-primary float-right">
+                            <!-- <input type="button" value="Add" class="btn btn-primary float-right"> -->
+                            <el-row>
+                                <b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner>
+                                <el-button type="success" @click="add" icon="el-icon-check" circle class="float-right">Add</el-button>
+                            </el-row>>
                         </div>
                     </form>
                     <hr>
                     <div class="tbl table-responsive">
                         <table class="table table-striped">
                             <thead>
-                                <tr>
+                                <tr style="text-align:center;">
                                     <th>
-                                        Classes
+                                        Available Classes
                                     </th>
+                                    <!-- <th>
+                                        Actions
+                                    </th> -->
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        JS1
-                                    </td>
+                                <tr v-for="classs in classes" :key='classs.id'>
+                                   <td>{{classs.class}}</td>
+                                   <!-- <td>
+                                        <el-button type="primary" icon="el-icon-edit" circle @click.prevent="edit(classs)"></el-button>
+                                        <el-button type="danger" icon="el-icon-delete" circle  @click.prevent="destroy(classs)"></el-button>
+                                    </td>  -->
                                 </tr>
-                                <tr>
-                                    <td>
-                                        JS2
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        JS3
-                                    </td>
-                                </tr>
+                                
                             </tbody>
                         </table>
                     </div>
@@ -51,7 +52,68 @@
 </template>
 
 <script>
+import baseurl from './baseURL';
+// import swal from 'sweetalert';
+import {mapState,mapActions} from 'vuex'
 export default {
+    data(){
+        return{
+            classs:{
+                classs:''
+            },
+             error:{
+                errClass:'',
+                errCurrentClass:''
+            },
+            editID:'',
+            initialClass:{},
+            currentClass:{},
+            editDialogVisible:false,
+            spinner:false,
+        }   
+    },
+    computed:{
+        ...mapState(['classes'])
+    },
+    mounted(){
+        this.spinner=true
+        
+        this.getClasses()
+        .then(
+            this.spinner=false
+        )
+    },
+    methods:{
+        ...mapActions(['getClasses']),
+        add(){
+            if(this.classs.classs==''){
+                this.error.errClass='Enter a class'
+                setTimeout(()=>{
+                    this.error.errClass=''
+                },4000)
+                return false 
+            }
+            const classInput = this.classes.filter(sub=>sub.class==this.classs.classs)
+            if(classInput.length>0){
+                this.error.errClass='Class already exist'
+                setTimeout(()=>{
+                    this.error.errClass=''
+                },4000)
+                return false 
+            }
+            this.spinner=true
+
+            this.axios.post(baseurl+'/class',this.classs)
+            .then((res)=>{
+                // console.log(res.data.class)
+                this.classes.splice(0,0,res.data.class)
+                this.classs.classs=''
+                this.spinner=false
+                // this.$refs.subj.focus()
+                
+            })
+        },
+    }
     
 }
 </script>
@@ -60,5 +122,7 @@ export default {
     .frminput{
             border-radius: 30px;
     }
-    
+    .err{
+        color: red;
+    }
 </style>

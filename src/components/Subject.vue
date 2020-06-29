@@ -9,7 +9,7 @@
                     <form id="frm">
                         <div class="row form-group">
                             <label for="subject">Subject</label>
-                            <input type="text" id="subject" class="form-control frminput" placeholder="New subject ..." v-model='subject.subject' @input="subject.subject=$event.target.value.toUpperCase()">
+                            <input type="text" id="subject" class="form-control frminput" placeholder="New subject ..." v-model.trim='subject.subject' @input="subject.subject=$event.target.value.toUpperCase()">
                             <span v-if="error.errSubject" class="err">{{error.errSubject}}</span>
                         </div>
                         <div class="form-group">
@@ -90,7 +90,9 @@ export default {
         
     },
     watch:{
-        
+        // subject:function() {
+        //     this.suject.subject.trim()
+        // }
     },
     methods:{
         ...mapActions(['getSubjects']),
@@ -182,15 +184,8 @@ export default {
         // }
     },
     mounted(){
-         this.spinner=true
-        // this.axios.get(baseurl+'/subject')
-        // .then((res)=>{
-        //     this.subjects = res.data.subjects
-        //     this.spinner=false
-        // })
-        // .catch((err)=>{
-        //     console.log(err)
-        // })
+        this.spinner=true
+        
         this.getSubjects()
         .then(
             this.spinner=false
