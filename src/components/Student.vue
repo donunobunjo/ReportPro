@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row justify-content-center">
-            <div class="card card-default col-md-10">
+            <div class="card card-default col-md-12">
                 <div class="card-header">
                     <h3>Register Student</h3>
                 </div>
@@ -9,32 +9,40 @@
                     <form id="frm">
                         <div class="row form-group">
                             <label for="rollNum">Roll Number</label>
-                            <input type="text" id="rollNum" class="form-control frminput" placeholder="Roll Number ...">
+                            <input type="text" id="rollNum" class="form-control frminput" placeholder="Roll Number ..." v-model='student.roll_num'>
                         </div>
                         <div class="row form-group">
                             <label for="fullName">Full Name</label>
-                            <input type="text" id="fullName" class="form-control frminput" placeholder="Full Name ...">
+                            <input type="text" id="fullName" class="form-control frminput" placeholder="Full Name ..." v-model='student.fullname'>
                         </div>
                         <div class="row form-group">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="Male">
-                                <label class="form-check-label" for="inlineRadio1">Male</label>
+                                <input class="form-check-input" type="radio" name="gender" id="male" value="Male" v-model="student.gender">
+                                <label class="form-check-label" for="male">Male</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="Female">
-                                <label class="fo    rm-check-label" for="inlineRadio2">Female</label>
+                                <input class="form-check-input" type="radio" name="gender" id="female" value="Female" v-model="student.gender">
+                                <label class="fo    rm-check-label" for="female">Female</label>
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="dob">Date of Birth</label>
-                            <input type="date" id="dob" class="form-control frminput">
+                            <input type="date" id="dob" class="form-control frminput" v-model="student.dob" >
                         </div>
                         <div class="row form-group">
                             <label for="class">Class</label>
-                            <!-- <input type="text" id="" class="form-control frminput" placeholder="Full Name ..."> -->
+                            <select id="state" class="form-control" @change="change" v-model='student.class' >
+                                <option selected disabled value="">Select a class ...</option>
+                                <option v-for="classs in classes" :value="classs.class" :key="classs.class">
+                                    {{classs.class}}
+                                </option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <input type="button" value="Add" class="btn btn-primary float-right">
+                            <el-row>
+                                <b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner>
+                                <el-button type="success" @click="add" icon="el-icon-check" circle class="float-right">Add</el-button>
+                            </el-row>>
                         </div>
                     </form>
                     
@@ -45,24 +53,45 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        Subjects
+                                        Roll#
+                                    </th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Class
+                                    </th>
+                                    <th>
+                                        DOB(yyyy-mm-dd)
+                                    </th>
+                                    <th>
+                                        Gender
+                                    </th>
+                                     <th>
+                                        Action
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr v-for="student in studs" :key="student.id">
                                     <td>
-                                        Physics
+                                        {{student.roll_num}}
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Economics
+                                     <td>
+                                        {{student.fullname}}
                                     </td>
-                                </tr>
-                                <tr>
                                     <td>
-                                        Statistics
+                                        {{student.class}}
+                                    </td>
+                                    <td>
+                                        {{student.dob}}
+                                    </td>
+                                    <td>
+                                        {{student.gender}}
+                                    </td>
+                                     <td>
+                                        <el-button type="primary" icon="el-icon-edit" circle @click.prevent="edit()"></el-button>
+                                        <el-button type="danger" icon="el-icon-delete" circle  @click.prevent="destroy(student)"></el-button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -75,8 +104,80 @@
 </template>
 
 <script>
+import {mapActions,mapState} from 'vuex'
+import baseurl from './baseURL'
+import swal from 'sweetalert';
 export default {
-    
+    data(){
+        return {
+            student:{
+                roll_num:'',
+                fullname:'',
+                dob:'',
+                class:'',
+                gender:'Male',
+                active:1
+            },
+            //current students being registered
+            studs:[],
+            spinner:false
+        }
+    },
+    computed:{
+        ...mapState(['students','classes'])
+    },
+    mounted(){
+        this.getClasses()
+        this.getStudents()
+        
+    },
+    methods:{
+        ...mapActions(['getStudents','getClasses']),
+        change(){
+            // console.log('changeeeeee')
+        },
+        add(){
+            // console.log(this.students)
+            this.axios.post(baseurl+'/student',this.student)
+            .then((res)=>{
+                // console.log(res.data.student)
+                this.students.splice(0,0,res.data.student)
+                this.studs.splice(0,0,res.data.student)
+                this.student.roll_num=''
+                this.student.fullname=''
+                this.student.dob =''
+                this.student.class=''
+                this.student.gender='Male'
+            })
+        },
+        edit(){
+            console.log('edit')
+        },
+        destroy(student){
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this student!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                    this.axios.delete(baseurl+'/student/'+student.id)
+                    .then((res)=>{
+                       if (res.data.message=='Student deleted successfully'){
+                         this.students.splice(this.students.indexOf(student), 1)
+                         this.studs.splice(this.studs.indexOf(student), 1)
+                        }
+                    })
+                    swal("Student deleted successfully!", {
+                    icon: "success",
+                    });
+                }
+               
+            });
+        }
+    }
 }
 </script>
 
