@@ -90,9 +90,49 @@
                                         {{student.gender}}
                                     </td>
                                      <td>
-                                        <el-button type="primary" icon="el-icon-edit" circle @click.prevent="edit()"></el-button>
+                                        <el-button type="primary" icon="el-icon-edit" circle @click.prevent="edit(student)"></el-button>
                                         <el-button type="danger" icon="el-icon-delete" circle  @click.prevent="destroy(student)"></el-button>
                                     </td>
+                                    <el-dialog v-if="editID" :visible.sync="editDialogVisible">
+                                        <h3>Edit student information</h3>
+                                        <form>
+                                            <div class="row form-group">
+                                                <label for="currentRollNum">Roll Number</label>
+                                                <input type="text" id="currentRollNum" class="form-control frminput" placeholder="Roll Number ..." v-model='currentStudent.roll_num'>
+                                            </div>
+                                            <div class="row form-group">
+                                                <label for="currentFullName">Full Name</label>
+                                                <input type="text" id="currentFullName" class="form-control frminput" placeholder="Full Name ..." v-model='currentStudent.fullname'>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="currentGender" id="currentMale" value="Male" v-model="currentStudent.gender">
+                                                    <label class="form-check-label" for="currentMale">Male</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="currentGender" id="currentFemale" value="Female" v-model="currentStudent.gender">
+                                                    <label class="fo    rm-check-label" for="currentFemale">Female</label>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <label for="currentDob">Date of Birth</label>
+                                                <input type="date" id="currentDob" class="form-control frminput" v-model="currentStudent.dob" >
+                                            </div>
+                                            <div class="row form-group">
+                                                <label for="currentClass">Class</label>
+                                                <select id="currentClass" class="form-control" @change="change" v-model='currentStudent.class' >
+                                                    <option selected disabled value="">Select a class ...</option>
+                                                    <option v-for="classs in classes" :value="classs.class" :key="classs.class">
+                                                        {{classs.class}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <el-button type="primary" icon="el-icon-close" circle class="float-right dia" @click.prevent='cancel'></el-button>
+                                                <el-button type="primary" icon="el-icon-check" circle class="float-right dia" @click.prevent="update(currentStudent)"></el-button>
+                                            </div>
+                                        </form>
+                                    </el-dialog>
                                 </tr>
                             </tbody>
                         </table>
@@ -120,7 +160,11 @@ export default {
             },
             //current students being registered
             studs:[],
-            spinner:false
+            spinner:false,
+            editID:'',
+            initialStudent:{},
+            currentStudent:{},
+            editDialogVisible:false
         }
     },
     computed:{
@@ -150,8 +194,25 @@ export default {
                 this.student.gender='Male'
             })
         },
-        edit(){
-            console.log('edit')
+        edit(student){
+            // console.log('edit')
+            this.editID= student.id
+            this.initialStudent=student
+            this.currentStudent.id =student.id
+            this.currentStudent.roll_num = student.roll_num
+            this.currentStudent.fullname = student.fullname
+            this.currentStudent.dob = student.dob
+            this.currentStudent.class = student.class
+            this.currentStudent.gender = student.gender
+            this.editDialogVisible=true
+        },
+        update(student){
+            this.axios.put(baseurl+'/student/'+student.id,this.currentStudent)
+            .then(res=>{
+                this.students.splice(this.students.indexOf(this.initialStudent), 1,res.data.newstudent)
+                this.studs.splice(this.studs.indexOf(this.initialStudent),1,res.data.newstudent)
+                this.editDialogVisible=false
+            })
         },
         destroy(student){
             swal({
@@ -176,6 +237,9 @@ export default {
                 }
                
             });
+        },
+        cancel(){
+            this.editDialogVisible=false
         }
     }
 }

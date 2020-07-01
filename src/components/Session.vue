@@ -70,7 +70,7 @@ export default {
     methods:{
         ...mapActions(['getSessions']),
          add(){
-            if(this.sesion.sesion==''){
+            if(this.sesion.sesion==''||this.sesion.sesion.trim()==''){
                 this.error.errSession='Enter a Session'
                 setTimeout(()=>{
                     this.error.errSession=''

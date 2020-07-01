@@ -39,7 +39,7 @@
                                         <el-button type="primary" icon="el-icon-edit" circle @click.prevent="edit(subject)"></el-button>
                                         <el-button type="danger" icon="el-icon-delete" circle  @click.prevent="destroy(subject)"></el-button>
                                     </td>
-                                     <el-dialog v-if="editID" :visible.sync="editDialogVisible">
+                                    <el-dialog v-if="editID" :visible.sync="editDialogVisible">
                                         <form>
                                             <div class="row form-group">
                                                 <label for="currentSubject">Subject</label>
@@ -97,7 +97,7 @@ export default {
     methods:{
         ...mapActions(['getSubjects']),
         add(){
-            if(this.subject.subject==''){
+            if(this.subject.subject==''||this.subject.subject.trim()==''){
                 this.error.errSubject='Enter a subject'
                 setTimeout(()=>{
                     this.error.errSubject=''
@@ -131,7 +131,7 @@ export default {
             this.editDialogVisible=true
         },
         update(subject){
-            if(this.currentSubject.subject==''){
+            if(this.currentSubject.subject==''||this.currentSubject.subject.trim()==''){
                 this.error.errCurrentSubject='Enter a subject'
                 setTimeout(()=>{
                     this.error.errCurrentSubject=''

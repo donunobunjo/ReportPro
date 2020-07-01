@@ -86,7 +86,7 @@ export default {
     methods:{
         ...mapActions(['getClasses']),
         add(){
-            if(this.classs.classs==''){
+            if(this.classs.classs==''||this.classs.classs.trim()==''){
                 this.error.errClass='Enter a class'
                 setTimeout(()=>{
                     this.error.errClass=''
