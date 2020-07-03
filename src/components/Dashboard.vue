@@ -25,7 +25,7 @@
         <template slot="title"><i class="el-icon-menu"></i>Exam/C.A.</template>
         <el-menu-item-group>
           <template slot="title">Score</template>
-          <el-menu-item index="2-1">Enter Scores</el-menu-item>
+          <el-menu-item index="2-1" route="/dashboard/score">Enter Scores</el-menu-item>
           <!-- <el-menu-item index="2-2">Option 2</el-menu-item> -->
         </el-menu-item-group>
         <!-- <el-menu-item-group title="Group 2">

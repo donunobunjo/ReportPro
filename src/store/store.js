@@ -11,7 +11,8 @@ export default new Vuex.Store({
         subjects:[],
         classes:[],
         sessions:[],
-        students:[]
+        students:[],
+        scores:[]
     },
     getters:{
 
@@ -32,6 +33,9 @@ export default new Vuex.Store({
         },
         LOAD_STUDENTS(state,payload){
             state.students=payload.data.students
+        },
+        LOAD_SCORES(state, payload){
+            state.scores=payload.data.scores
         }
     },
     actions:{
@@ -47,6 +51,9 @@ export default new Vuex.Store({
         },
         async getStudents({commit}){
             return commit('LOAD_STUDENTS', await Axios.get(baseurl+'/student'))
+        },
+        async getScores({commit}){
+            return commit('LOAD_SCORES', await Axios.get(baseurl+'/score'))
         }
 
     }

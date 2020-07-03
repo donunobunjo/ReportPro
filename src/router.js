@@ -7,6 +7,7 @@ import Subject from './components/Subject.vue'
 import Student from './components/Student.vue'
 import Class from './components/Class.vue'
 import Session from './components/Session.vue'
+import Score from './components/Score.vue'
 export default [
     {
         name:'home',
@@ -32,7 +33,8 @@ export default [
             {path:'/',component:DashboardHome},
             { path: 'subject', component:Subject },
             { path: 'class', component:Class },
-            { path:'session', component:Session}
+            { path:'session', component:Session},
+            { path:'score', component:Score}
         ]
     }
 ]
