@@ -9,11 +9,13 @@
                     <form id="frm">
                         <div class="row form-group">
                             <label for="rollNum">Roll Number</label>
-                            <input type="text" id="rollNum" class="form-control frminput" placeholder="Roll Number ..." v-model='student.roll_num'>
+                            <input type="text" id="rollNum" class="form-control frminput" placeholder="Roll Number ..." v-model='student.roll_num' @input="student.roll_num=$event.target.value.toUpperCase()">
+                            <span v-if="error.errRollNum" class="err">{{error.errRollNum}}</span>
                         </div>
                         <div class="row form-group">
                             <label for="fullName">Full Name</label>
-                            <input type="text" id="fullName" class="form-control frminput" placeholder="Full Name ..." v-model='student.fullname'>
+                            <input type="text" id="fullName" class="form-control frminput" placeholder="Full Name ..." v-model='student.fullname' @input="student.fullname=$event.target.value.toUpperCase()">
+                            <span v-if="error.errFullName" class="err">{{error.errFullName}}</span>
                         </div>
                         <div class="row form-group">
                             <div class="form-check form-check-inline">
@@ -28,15 +30,17 @@
                         <div class="row form-group">
                             <label for="dob">Date of Birth</label>
                             <input type="date" id="dob" class="form-control frminput" v-model="student.dob" >
+                            <span v-if="error.errDOB" class="err">{{error.errDOB}}</span> 
                         </div>
                         <div class="row form-group">
                             <label for="class">Class</label>
-                            <select id="state" class="form-control" @change="change" v-model='student.class' >
+                            <select id="state" class="form-control" v-model='student.class' >
                                 <option selected disabled value="">Select a class ...</option>
                                 <option v-for="classs in classes" :value="classs.class" :key="classs.class">
                                     {{classs.class}}
                                 </option>
                             </select>
+                            <span v-if="error.errClass" class="err">{{error.errClass}}</span>
                         </div>
                         <div class="form-group">
                             <el-row>
@@ -98,11 +102,13 @@
                                         <form>
                                             <div class="row form-group">
                                                 <label for="currentRollNum">Roll Number</label>
-                                                <input type="text" id="currentRollNum" class="form-control frminput" placeholder="Roll Number ..." v-model='currentStudent.roll_num'>
+                                                <input type="text" id="currentRollNum" class="form-control frminput" placeholder="Roll Number ..." v-model='currentStudent.roll_num' @input="currentStudent.roll_num=$event.target.value.toUpperCase()">
+                                                <span v-if="error.errCurrentRollNum" class="err">{{error.errCurrentRollNum}}</span>
                                             </div>
                                             <div class="row form-group">
                                                 <label for="currentFullName">Full Name</label>
-                                                <input type="text" id="currentFullName" class="form-control frminput" placeholder="Full Name ..." v-model='currentStudent.fullname'>
+                                                <input type="text" id="currentFullName" class="form-control frminput" placeholder="Full Name ..." v-model='currentStudent.fullname' @input="currentStudent.fullname=$event.target.value.toUpperCase()">
+                                                <span v-if="error.errCurrentFullName" class="err">{{error.errCurrentFullName}}</span>
                                             </div>
                                             <div class="row form-group">
                                                 <div class="form-check form-check-inline">
@@ -120,7 +126,7 @@
                                             </div>
                                             <div class="row form-group">
                                                 <label for="currentClass">Class</label>
-                                                <select id="currentClass" class="form-control" @change="change" v-model='currentStudent.class' >
+                                                <select id="currentClass" class="form-control" v-model='currentStudent.class' >
                                                     <option selected disabled value="">Select a class ...</option>
                                                     <option v-for="classs in classes" :value="classs.class" :key="classs.class">
                                                         {{classs.class}}
@@ -164,7 +170,17 @@ export default {
             editID:'',
             initialStudent:{},
             currentStudent:{},
-            editDialogVisible:false
+            editDialogVisible:false,
+            error:{
+                errRollNum:'',
+                errFullName:'',
+                errDOB:'',
+                errClass:'',
+                errCurrentRollNum:'',
+                errCurrentFullName:'',
+                // errCurrentDOB:'',
+                // errCurrentClass:''
+            }
         }
     },
     computed:{
@@ -177,14 +193,45 @@ export default {
     },
     methods:{
         ...mapActions(['getStudents','getClasses']),
-        change(){
-            // console.log('changeeeeee')
-        },
         add(){
-            // console.log(this.students)
+            if(this.student.roll_num==''||this.student.roll_num.trim()==''){
+                this.error.errRollNum='Enter student roll number'
+                setTimeout(()=>{
+                    this.error.errRollNum=''
+                },4000)
+                return false 
+            }
+            const rollNumInput = this.students.filter(stud=>stud.roll_num==this.student.roll_num)
+            if(rollNumInput.length>0){
+                this.error.errRollNum='Roll number already exist'
+                setTimeout(()=>{
+                    this.error.errRollNum=''
+                },4000)
+                return false 
+            }
+            if(this.student.fullname==''||this.student.fullname.trim()==''){
+                this.error.errFullName='Enter student name'
+                setTimeout(()=>{
+                    this.error.errFullName=''
+                },4000)
+                return false 
+            }
+            if(this.student.dob==''){
+                this.error.errDOB='Enter student date of birth'
+                setTimeout(()=>{
+                    this.error.errDOB=''
+                },4000)
+                return false 
+            }
+            if(this.student.class==''){
+                this.error.errClass='Select student class'
+                setTimeout(()=>{
+                    this.error.errClass=''
+                },4000)
+                return false 
+            }
             this.axios.post(baseurl+'/student',this.student)
             .then((res)=>{
-                // console.log(res.data.student)
                 this.students.splice(0,0,res.data.student)
                 this.studs.splice(0,0,res.data.student)
                 this.student.roll_num=''
@@ -195,7 +242,6 @@ export default {
             })
         },
         edit(student){
-            // console.log('edit')
             this.editID= student.id
             this.initialStudent=student
             this.currentStudent.id =student.id
@@ -248,5 +294,8 @@ export default {
 <style scoped>
     .frminput{
             border-radius: 30px;
+    }
+    .err{
+        color: red;
     }
 </style>

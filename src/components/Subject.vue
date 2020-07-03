@@ -77,7 +77,6 @@ export default {
                 errSubject:'',
                 errCurrentSubject:''
             },
-            // subjects:[],
             spinner:false,
             editID:'',
             initialSubject:{},
@@ -88,11 +87,6 @@ export default {
     computed:{
         ...mapState(['subjects']),
         
-    },
-    watch:{
-        // subject:function() {
-        //     this.suject.subject.trim()
-        // }
     },
     methods:{
         ...mapActions(['getSubjects']),
@@ -139,7 +133,6 @@ export default {
                 return false 
             }
             const subjectInput = this.subjects.filter(sub=>sub.subject==this.currentSubject.subject)
-            // if(subjectInput.length>0 && this.currentSubject!=subjectInput[0].subject){
             if(subjectInput.length>0){
                 this.error.errCurrentSubject='Subject already exist'
                 setTimeout(()=>{
@@ -179,9 +172,6 @@ export default {
             });
 
         },
-        // change(){
-
-        // }
     },
     mounted(){
         this.spinner=true

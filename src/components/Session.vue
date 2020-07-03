@@ -13,7 +13,6 @@
                             <span v-if="error.errSession" class="err">{{error.errSession}}</span>
                         </div>
                         <div class="form-group">
-                            <!-- <input type="button" value="Add" class="btn btn-primary float-right"> -->
                             <el-row>
                                 <b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner>
                                 <el-button type="success" @click="add" icon="el-icon-check" circle class="float-right">Add</el-button>
@@ -86,11 +85,8 @@ export default {
                 return false 
             }
             this.spinner=true
-            console.log(this.sesion)
-
             this.axios.post(baseurl+'/session',this.sesion)
             .then((res)=>{
-                // console.log(res.data.class)
                 this.sessions.splice(0,0,res.data.session)
                 this.sesion.sesion=''
                 this.spinner=false
@@ -100,12 +96,9 @@ export default {
         },
     },
     mounted(){
-        // console.log('mounted')
         this.spinner=true
-        
         this.getSessions()
         .then(
-            // console.log('hel')
             this.spinner=false
         )
     }

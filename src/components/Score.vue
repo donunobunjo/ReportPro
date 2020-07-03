@@ -230,22 +230,29 @@ export default {
             this.currentScore.first_ca= score.first_ca
             this.currentScore.second_ca = score.second_ca
             this.currentScore.exam = score.exam
-            this.editDialogVisible=true
+             this.editDialogVisible=true
+            // console.log(score)
+            // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+            // console.log(this.initialScore)
+            // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+            // console.log(this.currentScore)
+
         },
         update(score){
-            console.log(score)
-            console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-            console.log(this.initialScore)
-            console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-            console.log(this.currentScore)
+            // console.log(score)
+            // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+            // console.log(this.initialScore)
+            // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+            // console.log(this.currentScore)
 
 
-            // this.axios.put(baseurl+'/score/'+score.id,this.currentScore)
-            // .then(res=>{
-            //     this.scores.splice(this.scores.indexOf(this.initialScore), 1,res.data.newscore)
-            //     this.subjectScores.splice(this.subjectScores.indexOf(this.initialScore),1,res.data.newscore)
-            //     this.editDialogVisible=false
-            // })
+            this.axios.put(baseurl+'/score/'+score.id,this.currentScore)
+            .then(res=>{
+                console.log(res.data.newscore)
+                this.scores.splice(this.scores.indexOf(this.initialScore), 1,res.data.newscore)
+                this.subjectScores.splice(this.subjectScores.indexOf(this.initialScore),1,res.data.newscore)
+                this.editDialogVisible=false
+            })
         },
         destroy(score){
             swal({

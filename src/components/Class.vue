@@ -13,7 +13,6 @@
                             <span v-if="error.errClass" class="err">{{error.errClass}}</span>
                         </div>
                         <div class="form-group">
-                            <!-- <input type="button" value="Add" class="btn btn-primary float-right"> -->
                             <el-row>
                                 <b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner>
                                 <el-button type="success" @click="add" icon="el-icon-check" circle class="float-right">Add</el-button>
@@ -28,20 +27,12 @@
                                     <th>
                                         Available Classes
                                     </th>
-                                    <!-- <th>
-                                        Actions
-                                    </th> -->
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="classs in classes" :key='classs.id'>
                                    <td>{{classs.class}}</td>
-                                   <!-- <td>
-                                        <el-button type="primary" icon="el-icon-edit" circle @click.prevent="edit(classs)"></el-button>
-                                        <el-button type="danger" icon="el-icon-delete" circle  @click.prevent="destroy(classs)"></el-button>
-                                    </td>  -->
                                 </tr>
-                                
                             </tbody>
                         </table>
                     </div>
@@ -105,7 +96,6 @@ export default {
 
             this.axios.post(baseurl+'/class',this.classs)
             .then((res)=>{
-                // console.log(res.data.class)
                 this.classes.splice(0,0,res.data.class)
                 this.classs.classs=''
                 this.spinner=false
