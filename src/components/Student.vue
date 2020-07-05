@@ -117,7 +117,7 @@
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="currentGender" id="currentFemale" value="Female" v-model="currentStudent.gender">
-                                                    <label class="fo    rm-check-label" for="currentFemale">Female</label>
+                                                    <label class="form-check-label" for="currentFemale">Female</label>
                                                 </div>
                                             </div>
                                             <div class="row form-group">
@@ -253,6 +253,31 @@ export default {
             this.editDialogVisible=true
         },
         update(student){
+             if(this.currentStudent.roll_num==''||this.currentStudent.roll_num.trim()==''){
+                this.error.errCurrentRollNum='Enter a roll number'
+                setTimeout(()=>{
+                    this.error.errCurrentRollNum=''
+                },4000)
+                return false 
+            }
+            const rollNumInput = this.students.filter(stud=>stud.roll_num==this.currentStudent.roll_num)
+            if(rollNumInput.length>0){
+                this.error.errCurrentRollNum='Roll number already exist'
+                setTimeout(()=>{
+                    this.error.errCurrentRollNum=''
+                },4000)
+                return false 
+            }
+            if(this.currentStudent.fullname==''||this.currentStudent.fullname.trim()==''){
+                this.error.errCurrentFullName='Enter student name'
+                setTimeout(()=>{
+                    this.error.errCurrentFullName=''
+                },4000)
+                return false 
+            }
+
+
+
             this.axios.put(baseurl+'/student/'+student.id,this.currentStudent)
             .then(res=>{
                 this.students.splice(this.students.indexOf(this.initialStudent), 1,res.data.newstudent)
