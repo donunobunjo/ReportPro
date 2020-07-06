@@ -40,7 +40,7 @@
         <template slot="title"><i class="el-icon-setting"></i>Result</template>
         <el-menu-item-group>
           <template slot="title">Termly</template>
-          <el-menu-item index="3-1">Termly Report</el-menu-item>
+          <el-menu-item index="3-1" route="/dashboard/termlyreport">Termly Report</el-menu-item>
           <!-- <el-menu-item index="3-2">Option 2</el-menu-item> -->
         </el-menu-item-group>
         <el-menu-item-group title="Cummulative">

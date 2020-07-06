@@ -8,6 +8,7 @@ import Student from './components/Student.vue'
 import Class from './components/Class.vue'
 import Session from './components/Session.vue'
 import Score from './components/Score.vue'
+import ReportSheet from './components/ReportSheet.vue'
 export default [
     {
         name:'home',
@@ -34,7 +35,8 @@ export default [
             { path: 'subject', component:Subject },
             { path: 'class', component:Class },
             { path:'session', component:Session},
-            { path:'score', component:Score}
+            { path:'score', component:Score},
+            { path:'termlyreport' ,component:ReportSheet}
         ]
     }
 ]

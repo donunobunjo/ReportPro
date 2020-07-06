@@ -208,11 +208,26 @@ export default {
         ...mapState(['students','classes','subjects','sessions','scores'])
     },
     mounted(){
-        this.getClasses()
-        this.getStudents()
-        this.getSubjects()
-        this.getSessions()
-        this.getScores()
+        this.getClasses().then(()=>{
+            console.log('Classssssssss')
+            // console.log(res.data.classes)
+        })
+        this.getStudents().then(()=>{
+            console.log('studentsssssssssssssssssss')
+            // console.log(res.data.students)
+        })
+        this.getSubjects().then(()=>{
+            console.log('subjectsssssssss')
+            // console.log(res.data.subjects)
+        })
+        this.getSessions().then(()=>{
+            console.log('sesssioonsssss')
+            // console.log(res.data.sessions)
+        })
+        this.getScores().then(()=>{
+            console.log('scoresssss')
+            // console.log(res.data.scores)
+        })
     },
     methods:{
         ...mapActions(['getStudents','getClasses','getSubjects','getSessions','getScores']),
