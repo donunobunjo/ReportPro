@@ -30,10 +30,10 @@ export default [
         path:'/dashboard',
         component:Dashboard,
         children:[
+            {path:'',component:DashboardHome},
             {path:'student',component:Student},
-            {path:'/',component:DashboardHome},
-            { path: 'subject', component:Subject },
-            { path: 'class', component:Class },
+            { path: 'subject', component:Subject},
+            { path: 'class', component:Class},
             { path:'session', component:Session},
             { path:'score', component:Score},
             { path:'termlyreport' ,component:ReportSheet}
