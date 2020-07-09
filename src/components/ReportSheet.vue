@@ -92,7 +92,8 @@ export default {
            clas:'',
            error:{
                errParameter:''
-           }
+           },
+           report:[]
             
         }
     },
@@ -146,10 +147,13 @@ export default {
                  })
                 // console.log(sumStudentsScore)
                 this.subjects.forEach(function(subject){
+                    let position = 1
+                    // let numOfStudent
                     const subjTaken = sumStudentsScore.filter(score=>score.subject==subject.subject)
                     if(subjTaken.length>0){
-                        subjTaken.sort((a, b) => {return a.total -b.total})
+                        subjTaken.sort((a, b) => {return b.total -a.total})
                         // console.log(subjTaken)
+                        const numOfStudent=subjTaken.length
                         subjTaken.forEach(function(scr){
                             let student= trimStudentsInClass.find(stud=>stud.roll_num==scr.roll_num)
                             let scrs={}
@@ -158,13 +162,18 @@ export default {
                             scrs.second_ca=scr.second_ca
                             scrs.exam=scr.exam
                             scrs.total=scr.total
+                            scrs.position = position
+                            scrs.numOfStudent=numOfStudent
                             student.session=scr.session
                             student.term=scr.term
                             student.scores.push(scrs)
+                            position= position+1
                         })
                     }
                 })
-                 console.log(trimStudentsInClass)
+                //  console.log(trimStudentsInClass)
+                this.report=trimStudentsInClass
+                console.log(this.report)
             }
         }
         
