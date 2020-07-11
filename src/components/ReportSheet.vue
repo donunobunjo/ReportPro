@@ -46,31 +46,74 @@
                     <hr>
                     <hr>
                     <div class="tbl table-responsive">
-                        <table class="table table-striped">
+                        
+                        <table class="table" v-for="stud in report" :key="stud.roll_num">
+                            <hr style="height:4px;border-width:0;color:blue;background-color:blue">
                             <thead>
-                                <tr>
-                                    <th>
-                                        Roll#
-                                    </th>
-                                    <th>
-                                        Name
-                                    </th>
-                                    <th>
-                                        1st Assessment
-                                    </th>
-                                    <th>
-                                        2nd Assessment
-                                    </th>
-                                    <th>
-                                        Exam
-                                    </th>
-                                    <th>
-                                        Actions
-                                    </th>
-                                </tr>
+                               <!-- <tr style="text-align:center;">
+                                    <th>.</th>
+                                    <th>.</th>
+                                    <th>.</th>
+                                    <th>.</th>
+                                    <th>.</th>
+                                    <th>.</th>
+                                </tr> -->
                             </thead>
                             <tbody>
-                                
+                              <tr>
+                                  <td>Roll Number:</td>
+                                  <td>{{stud.roll_num}}</td>
+                              </tr>
+                              <tr>
+                                  <td>Name:</td>
+                                  <td>{{stud.fullname}}</td>
+                              </tr>  
+                              <tr>
+                                  <td>Session:</td>
+                                  <td>{{stud.session}}</td>
+                                  <td>Term:</td>
+                                  <td>{{stud.term}}</td>
+                              </tr>
+                              <tr>
+                                  <td>Class</td>
+                                  <td>{{stud.class}}</td>
+                              </tr>
+                              <tr>
+                                  <table>
+                                        <thead>
+                                          <tr style="text-align:center;">
+                                            <th>
+                                                Subject
+                                            </th>
+                                            <th>
+                                                FirstCA
+                                            </th>
+                                            <th>
+                                                SecondCA
+                                            </th>
+                                            <th>
+                                                Exam
+                                            </th>
+                                            <th>
+                                                Total
+                                            </th>
+                                            <th>
+                                                Position
+                                            </th>
+                                          </tr>
+                                        </thead>
+                                      <tbody>
+                                          <tr v-for="score in stud.scores" :key="score.subject">
+                                              <td>{{score.subject}}</td>
+                                              <td>{{score.first_ca}}</td>
+                                              <td>{{score.second_ca}}</td>
+                                              <td>{{score.exam}}</td>
+                                              <td>{{score.total}}</td>
+                                              <td>{{score.position}}/{{score.numOfStudent}}</td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </tr>
                             </tbody>
                         </table>
                     </div>
@@ -187,5 +230,11 @@ export default {
     }
     .err{
         color: red;
+    }
+    .right{
+        text-align: right;
+    }
+    .left{
+        text-align: left;
     }
 </style>
