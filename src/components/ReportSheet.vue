@@ -190,7 +190,10 @@ export default {
                  })
                 // console.log(sumStudentsScore)
                 this.subjects.forEach(function(subject){
-                    let position = 1
+                    let currentPosition = 0
+                    let counter=1
+                    let currentTotal=-1
+                    let bracket=false
                     // let numOfStudent
                     const subjTaken = sumStudentsScore.filter(score=>score.subject==subject.subject)
                     if(subjTaken.length>0){
@@ -205,18 +208,38 @@ export default {
                             scrs.second_ca=scr.second_ca
                             scrs.exam=scr.exam
                             scrs.total=scr.total
-                            scrs.position = position
+
+
+                            if (currentTotal== scr.total){
+                                bracket=true
+                                counter=counter+1
+                                scrs.position=currentPosition
+                            }
+                            else{
+                                if(bracket){
+                                    scrs.position=currentPosition+counter
+                                    counter=1
+                                }
+                                else{
+                                    scrs.position=currentPosition+1
+                                }
+                                
+                            }
+                            currentPosition=scrs.position
+                            currentTotal = scrs.total
+
+                            // scrs.position = position
                             scrs.numOfStudent=numOfStudent
                             student.session=scr.session
                             student.term=scr.term
                             student.scores.push(scrs)
-                            position= position+1
+                            // position= position+1
                         })
                     }
                 })
                 //  console.log(trimStudentsInClass)
                 this.report=trimStudentsInClass
-                console.log(this.report)
+                // console.log(this.report)
             }
         }
         
