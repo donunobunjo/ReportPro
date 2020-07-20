@@ -237,9 +237,21 @@ export default {
                         })
                     }
                 })
+                //  this.report=trimStudentsInClass
                 //  console.log(trimStudentsInClass)
-                this.report=trimStudentsInClass
-                // console.log(this.report)
+                const grandTotal = trimStudentsInClass.map(stud=>{
+                    let gTot = stud.scores.reduce(function(previous,next){
+                        return previous+next.total
+                    },0)
+                    return{
+                        ...stud,
+                        gTotal:gTot
+                    }
+                })
+                // this.report = grandTotal
+                grandTotal.sort((a,b)=>{return b.gTotal-a.gTotal})
+                console.log(grandTotal)
+                
             }
         }
         
