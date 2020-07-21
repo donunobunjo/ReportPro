@@ -99,7 +99,7 @@
 </template>
 
 <script>
-import {mapActions,mapState} from 'vuex'
+import {mapState} from 'vuex'
 // import baseurl from './baseURL'
 // import swal from 'sweetalert';
 export default {
@@ -118,15 +118,15 @@ export default {
     computed:{
         ...mapState(['students','classes','subjects','sessions','scores'])
     },
-    mounted(){
-        this.getClasses()
-        this.getStudents()
-        this.getSubjects()
-        this.getSessions()
-        this.getScores()
-    },
+    // mounted(){
+    //     this.getClasses()
+    //     this.getStudents()
+    //     this.getSubjects()
+    //     this.getSessions()
+    //     this.getScores()
+    // },
     methods:{
-        ...mapActions(['getStudents','getClasses','getSubjects','getSessions','getScores']),
+        // ...mapActions(['getStudents','getClasses','getSubjects','getSessions','getScores']),
         
         generate(){
             if (this.session==''||this.term==''||this.clas==''){

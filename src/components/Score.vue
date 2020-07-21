@@ -167,7 +167,7 @@
 </template>
 
 <script>
-import {mapActions,mapState} from 'vuex'
+import {mapState} from 'vuex'
 import baseurl from './baseURL'
 import swal from 'sweetalert';
 export default {
@@ -208,29 +208,29 @@ export default {
         ...mapState(['students','classes','subjects','sessions','scores'])
     },
     mounted(){
-        this.getClasses().then(()=>{
-            console.log('Classssssssss')
-            // console.log(res.data.classes)
-        })
-        this.getStudents().then(()=>{
-            console.log('studentsssssssssssssssssss')
-            // console.log(res.data.students)
-        })
-        this.getSubjects().then(()=>{
-            console.log('subjectsssssssss')
-            // console.log(res.data.subjects)
-        })
-        this.getSessions().then(()=>{
-            console.log('sesssioonsssss')
-            // console.log(res.data.sessions)
-        })
-        this.getScores().then(()=>{
-            console.log('scoresssss')
-            // console.log(res.data.scores)
-        })
+        // this.getClasses().then(()=>{
+        //     console.log('Classssssssss')
+        //     // console.log(res.data.classes)
+        // })
+        // this.getStudents().then(()=>{
+        //     console.log('studentsssssssssssssssssss')
+        //     // console.log(res.data.students)
+        // })
+        // this.getSubjects().then(()=>{
+        //     console.log('subjectsssssssss')
+        //     // console.log(res.data.subjects)
+        // })
+        // this.getSessions().then(()=>{
+        //     console.log('sesssioonsssss')
+        //     // console.log(res.data.sessions)
+        // })
+        // this.getScores().then(()=>{
+        //     console.log('scoresssss')
+        //     // console.log(res.data.scores)
+        // })
     },
     methods:{
-        ...mapActions(['getStudents','getClasses','getSubjects','getSessions','getScores']),
+        // ...mapActions(['getStudents','getClasses','getSubjects','getSessions','getScores']),
         change(){
             if (this.Sscore.session==''||this.Sscore.term==''||this.Sscore.clas==''||this.Sscore.subject==''){
                 return false
@@ -393,11 +393,9 @@ export default {
         rollLeave(){
             const rollNum = this.students.filter(stud=>stud.roll_num==this.Sscore.rollNumber && stud.class==this.Sscore.clas)
             if (rollNum.length>0){
-                // console.log('found')
                 this.Sscore.studentName= rollNum[0].fullname
             }
             else{
-                // console.log('not found')
                 this.error.errRollNum='This roll number those not belong to this class'
                 setTimeout(()=>{
                     this.error.errRollNum=''

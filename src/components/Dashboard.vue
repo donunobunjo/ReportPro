@@ -1,5 +1,6 @@
 <template>
     <el-container style="height: 500px; border: 1px solid #eee">
+      <b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner>
   <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
     <!-- <el-menu :default-openeds="['1', '3']" :router="routing"> -->
     <el-menu :router="routing">
@@ -84,11 +85,40 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
   data(){
     return {
-      routing:true
+      routing:true,
+      spinner:false
     }
+  },
+  methods:{
+    ...mapActions(['getStudents','getClasses','getSubjects','getSessions','getScores'])
+  },
+  mounted(){
+      this.spinner=true
+      this.getClasses()
+        .then(
+          this.getStudents()
+            .then(
+              this.getSubjects()
+                .then(
+                  this.getSessions()
+                    .then(
+                      this.getScores()
+                        .then(
+                          this.spinner=false
+                        )
+                    )
+                )
+            )
+        )
+      // this.getClasses()
+      // this.getStudents()
+      // this.getSubjects()
+      // this.getSessions()
+      // this.getScores()
   }
 }
 </script>

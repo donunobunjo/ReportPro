@@ -45,7 +45,7 @@
 <script>
 import baseurl from './baseURL';
 // import swal from 'sweetalert';
-import {mapState,mapActions} from 'vuex'
+import {mapState} from 'vuex'
 export default {
     data(){
         return{
@@ -67,7 +67,7 @@ export default {
         ...mapState(['sessions'])
     },
     methods:{
-        ...mapActions(['getSessions']),
+        // ...mapActions(['getSessions']),
          add(){
             if(this.sesion.sesion==''||this.sesion.sesion.trim()==''){
                 this.error.errSession='Enter a Session'
@@ -76,7 +76,7 @@ export default {
                 },4000)
                 return false 
             }
-            const sessionInput = this.sessions.filter(sub=>sub.session==this.sesion.sesion)
+            const sessionInput = this.sessions.filter(sub=>sub.session==this.sesion.sesion.trim())
             if(sessionInput.length>0){
                 this.error.errSession='session already exist'
                 setTimeout(()=>{
@@ -90,17 +90,15 @@ export default {
                 this.sessions.splice(0,0,res.data.session)
                 this.sesion.sesion=''
                 this.spinner=false
-                // this.$refs.subj.focus()
-                
             })
         },
     },
     mounted(){
-        this.spinner=true
-        this.getSessions()
-        .then(
-            this.spinner=false
-        )
+        // this.spinner=true
+        // this.getSessions()
+        // .then(
+        //     this.spinner=false
+        // )
     }
 }
 </script>

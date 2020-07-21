@@ -150,7 +150,7 @@
 </template>
 
 <script>
-import {mapActions,mapState} from 'vuex'
+import {mapState} from 'vuex'
 import baseurl from './baseURL'
 import swal from 'sweetalert';
 export default {
@@ -187,12 +187,12 @@ export default {
         ...mapState(['students','classes'])
     },
     mounted(){
-        this.getClasses()
-        this.getStudents()
+        // this.getClasses()
+        // this.getStudents()
         
     },
     methods:{
-        ...mapActions(['getStudents','getClasses']),
+        // ...mapActions(['getStudents','getClasses']),
         add(){
             if(this.student.roll_num==''||this.student.roll_num.trim()==''){
                 this.error.errRollNum='Enter student roll number'
@@ -201,7 +201,7 @@ export default {
                 },4000)
                 return false 
             }
-            const rollNumInput = this.students.filter(stud=>stud.roll_num==this.student.roll_num)
+            const rollNumInput = this.students.filter(stud=>stud.roll_num==this.student.roll_num.trim())
             if(rollNumInput.length>0){
                 this.error.errRollNum='Roll number already exist'
                 setTimeout(()=>{

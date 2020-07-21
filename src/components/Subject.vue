@@ -66,7 +66,7 @@
 <script>
 import baseurl from './baseURL';
 import swal from 'sweetalert';
-import {mapState,mapActions} from 'vuex'
+import {mapState} from 'vuex'
 export default {
     data () {
         return {
@@ -89,7 +89,7 @@ export default {
         
     },
     methods:{
-        ...mapActions(['getSubjects']),
+        // ...mapActions(['getSubjects']),
         add(){
             if(this.subject.subject==''||this.subject.subject.trim()==''){
                 this.error.errSubject='Enter a subject'
@@ -98,7 +98,8 @@ export default {
                 },4000)
                 return false 
             }
-            const subjectInput = this.subjects.filter(sub=>sub.subject==this.subject.subject)
+            const subjectInput = this.subjects.filter(sub=>sub.subject==this.subject.subject.trim())
+            console.log(subjectInput.length)
             if(subjectInput.length>0){
                 this.error.errSubject='Subject already exist'
                 setTimeout(()=>{
@@ -107,14 +108,11 @@ export default {
                 return false 
             }
             this.spinner=true
-
             this.axios.post(baseurl+'/subject',this.subject)
             .then((res)=>{
                 this.subjects.splice(0,0,res.data.subject)
                 this.subject.subject=''
                 this.spinner=false
-                // this.$refs.subj.focus()
-                
             })
         },
         edit(subject){
@@ -132,7 +130,7 @@ export default {
                 },4000)
                 return false 
             }
-            const subjectInput = this.subjects.filter(sub=>sub.subject==this.currentSubject.subject)
+            const subjectInput = this.subjects.filter(sub=>sub.subject==this.currentSubject.subject.trim())
             if(subjectInput.length>0){
                 this.error.errCurrentSubject='Subject already exist'
                 setTimeout(()=>{
@@ -174,12 +172,12 @@ export default {
         },
     },
     mounted(){
-        this.spinner=true
+        // this.spinner=true
         
-        this.getSubjects()
-        .then(
-            this.spinner=false
-        )
+        // this.getSubjects()
+        // .then(
+        //     this.spinner=false
+        // )
     }
     
 }

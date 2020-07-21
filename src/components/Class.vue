@@ -67,12 +67,12 @@ export default {
         ...mapState(['classes'])
     },
     mounted(){
-        this.spinner=true
+        // this.spinner=true
         
-        this.getClasses()
-        .then(
-            this.spinner=false
-        )
+        // this.getClasses()
+        // .then(
+        //     this.spinner=false
+        // )
     },
     methods:{
         ...mapActions(['getClasses']),
@@ -84,7 +84,7 @@ export default {
                 },4000)
                 return false 
             }
-            const classInput = this.classes.filter(sub=>sub.class==this.classs.classs)
+            const classInput = this.classes.filter(sub=>sub.class==this.classs.classs.trim())
             if(classInput.length>0){
                 this.error.errClass='Class already exist'
                 setTimeout(()=>{
@@ -99,8 +99,6 @@ export default {
                 this.classes.splice(0,0,res.data.class)
                 this.classs.classs=''
                 this.spinner=false
-                // this.$refs.subj.focus()
-                
             })
         },
     }
