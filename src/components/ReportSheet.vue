@@ -45,41 +45,16 @@
                     </form>
                     <hr>
                     <hr>
-                    <div class="tbl table-responsive">
-                        
-                        <table class="table" v-for="stud in report" :key="stud.roll_num">
-                            <hr style="height:4px;border-width:0;color:blue;background-color:blue">
-                            <thead>
-                               <!-- <tr style="text-align:center;">
-                                    <th>.</th>
-                                    <th>.</th>
-                                    <th>.</th>
-                                    <th>.</th>
-                                    <th>.</th>
-                                    <th>.</th>
-                                </tr> -->
-                            </thead>
-                            <tbody>
-                              <tr>
-                                  <td>Roll Number:</td>
-                                  <td>{{stud.roll_num}}</td>
-                              </tr>
-                              <tr>
-                                  <td>Name:</td>
-                                  <td>{{stud.fullname}}</td>
-                              </tr>  
-                              <tr>
-                                  <td>Session:</td>
-                                  <td>{{stud.session}}</td>
-                                  <td>Term:</td>
-                                  <td>{{stud.term}}</td>
-                              </tr>
-                              <tr>
-                                  <td>Class</td>
-                                  <td>{{stud.class}}</td>
-                              </tr>
-                              <tr>
-                                  <table>
+                    <div v-for="stud in report" :key="stud.roll_num">
+                        Roll Number:{{stud.roll_num}}<br>
+                        Name:{{stud.fullname}}<br>
+                        Session:{{stud.session}}<br>
+                        Term:{{stud.term}}<br>
+                        Class:{{stud.class}}<br>
+                        Total Score:{{stud.gTotal}}<br>
+                        Overall Position:{{stud.grandPosition}}&nbsp;&nbsp;of&nbsp;&nbsp;{{stud.noInClass}}
+                                <div class="tbl table-responsive">    
+                                    <table class="table">
                                         <thead>
                                           <tr style="text-align:center;">
                                             <th>
@@ -109,14 +84,14 @@
                                               <td>{{score.second_ca}}</td>
                                               <td>{{score.exam}}</td>
                                               <td>{{score.total}}</td>
-                                              <td>{{score.position}}/{{score.numOfStudent}}</td>
+                                              <td>{{score.position}}&nbsp;&nbsp;of&nbsp;&nbsp;{{score.numOfStudent}}</td>
                                           </tr>
                                       </tbody>
                                   </table>
-                              </tr>
-                            </tbody>
-                        </table>
+                                </div>  
+                    <hr style="height:4px;border-width:0;color:blue;background-color:blue">
                     </div>
+                    <hr style="height:4px;border-width:0;color:blue;background-color:blue">
                 </div>
             </div>
         </div>
@@ -233,25 +208,50 @@ export default {
                             student.session=scr.session
                             student.term=scr.term
                             student.scores.push(scrs)
-                            // position= position+1
                         })
                     }
                 })
-                //  this.report=trimStudentsInClass
-                //  console.log(trimStudentsInClass)
+                let gCurrentPosition = 0
+                let gCounter=1
+                let gCurrentTotal=-1
+                let gBracket=false
+                let gPosition=0
+                let noInClass= trimStudentsInClass.length
                 const grandTotal = trimStudentsInClass.map(stud=>{
                     let gTot = stud.scores.reduce(function(previous,next){
                         return previous+next.total
                     },0)
                     return{
                         ...stud,
-                        gTotal:gTot
+                        gTotal:gTot,
+                        noInClass:noInClass
                     }
                 })
-                // this.report = grandTotal
                 grandTotal.sort((a,b)=>{return b.gTotal-a.gTotal})
-                console.log(grandTotal)
-                
+                const reportSheet = grandTotal.map(score=>{
+                    if (gCurrentTotal==score.gTotal){
+                        gBracket=true
+                        gCounter=gCounter+1
+                        gPosition=gCurrentPosition
+                    }
+                    else{
+                        if(gBracket){
+                            gPosition=gCurrentPosition+gCounter
+                            gCounter=1
+                        }
+                        else{
+                            gPosition=gCurrentPosition+1
+                        }
+                    }
+                    gCurrentPosition=gPosition
+                    gCurrentTotal=score.gTotal
+                    return{
+                        ...score,
+                        grandPosition:gPosition
+                    }
+                })
+                this.report=reportSheet
+
             }
         }
         
