@@ -46,15 +46,9 @@
         <el-menu-item-group>
           <template slot="title">Termly</template>
           <el-menu-item index="4-1" route="/dashboard/termlyreport">Termly Report</el-menu-item>
+          <el-menu-item index="4-2" route="/dashboard/subjectsheet">Subject Sheet</el-menu-item>
           <!-- <el-menu-item index="3-2">Option 2</el-menu-item> -->
         </el-menu-item-group>
-        <el-menu-item-group title="Cummulative">
-          <el-menu-item index="-3">Cummulative Report</el-menu-item>
-        </el-menu-item-group>
-        <el-submenu index="3-4">
-          <template slot="title">Option 4</template>
-          <el-menu-item index="3-4-1">Option 4-1</el-menu-item>
-        </el-submenu>
       </el-submenu>
     </el-menu>
   </el-aside>
