@@ -44,7 +44,6 @@
 
 <script>
 import baseurl from './baseURL';
-// import swal from 'sweetalert';
 import {mapState} from 'vuex'
 export default {
     data(){
@@ -67,8 +66,7 @@ export default {
         ...mapState(['sessions'])
     },
     methods:{
-        // ...mapActions(['getSessions']),
-         add(){
+        add(){
             if(this.sesion.sesion==''||this.sesion.sesion.trim()==''){
                 this.error.errSession='Enter a Session'
                 setTimeout(()=>{
@@ -93,13 +91,6 @@ export default {
             })
         },
     },
-    mounted(){
-        // this.spinner=true
-        // this.getSessions()
-        // .then(
-        //     this.spinner=false
-        // )
-    }
 }
 </script>
 

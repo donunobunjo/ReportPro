@@ -164,7 +164,6 @@ export default {
                 gender:'Male',
                 active:1
             },
-            //current students being registered
             studs:[],
             spinner:false,
             editID:'',
@@ -178,21 +177,13 @@ export default {
                 errClass:'',
                 errCurrentRollNum:'',
                 errCurrentFullName:'',
-                // errCurrentDOB:'',
-                // errCurrentClass:''
             }
         }
     },
     computed:{
         ...mapState(['students','classes'])
     },
-    mounted(){
-        // this.getClasses()
-        // this.getStudents()
-        
-    },
     methods:{
-        // ...mapActions(['getStudents','getClasses']),
         add(){
             if(this.student.roll_num==''||this.student.roll_num.trim()==''){
                 this.error.errRollNum='Enter student roll number'

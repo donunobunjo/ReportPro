@@ -44,7 +44,6 @@
 
 <script>
 import baseurl from './baseURL';
-// import swal from 'sweetalert';
 import {mapState,mapActions} from 'vuex'
 export default {
     data(){
@@ -65,14 +64,6 @@ export default {
     },
     computed:{
         ...mapState(['classes'])
-    },
-    mounted(){
-        // this.spinner=true
-        
-        // this.getClasses()
-        // .then(
-        //     this.spinner=false
-        // )
     },
     methods:{
         ...mapActions(['getClasses']),

@@ -89,7 +89,6 @@ export default {
         
     },
     methods:{
-        // ...mapActions(['getSubjects']),
         add(){
             if(this.subject.subject==''||this.subject.subject.trim()==''){
                 this.error.errSubject='Enter a subject'
@@ -99,7 +98,6 @@ export default {
                 return false 
             }
             const subjectInput = this.subjects.filter(sub=>sub.subject==this.subject.subject.trim())
-            console.log(subjectInput.length)
             if(subjectInput.length>0){
                 this.error.errSubject='Subject already exist'
                 setTimeout(()=>{
@@ -171,15 +169,7 @@ export default {
 
         },
     },
-    mounted(){
-        // this.spinner=true
-        
-        // this.getSubjects()
-        // .then(
-        //     this.spinner=false
-        // )
-    }
-    
+
 }
 </script>
 

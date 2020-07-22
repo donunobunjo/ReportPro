@@ -100,8 +100,6 @@
 
 <script>
 import {mapState} from 'vuex'
-// import baseurl from './baseURL'
-// import swal from 'sweetalert';
 export default {
     data(){
         return {
@@ -118,19 +116,9 @@ export default {
     computed:{
         ...mapState(['students','classes','subjects','sessions','scores'])
     },
-    // mounted(){
-    //     this.getClasses()
-    //     this.getStudents()
-    //     this.getSubjects()
-    //     this.getSessions()
-    //     this.getScores()
-    // },
     methods:{
-        // ...mapActions(['getStudents','getClasses','getSubjects','getSessions','getScores']),
-        
         generate(){
             if (this.session==''||this.term==''||this.clas==''){
-                // this.error.errParameter='oppppppppps'
                 this.error.errParameter='You need to select from all the parameters'
                 setTimeout(()=>{
                     this.error.errParameter=''
@@ -140,7 +128,6 @@ export default {
             else{
                 const studentsScore = this.scores.filter(score=>score.session==this.session && score.class==this.clas && score.term==this.term) 
                 const studentsInClass = this.students.filter(stud=>stud.class==this.clas)
-                // // const subjects = this.subjects
                 const trimStudentsInClass= studentsInClass.map(stud=>{
                     return {
                        id:stud.id,
@@ -163,17 +150,14 @@ export default {
                          total:score.first_ca+score.second_ca+score.exam
                      }
                  })
-                // console.log(sumStudentsScore)
-                this.subjects.forEach(function(subject){
+                 this.subjects.forEach(function(subject){
                     let currentPosition = 0
                     let counter=1
                     let currentTotal=-1
                     let bracket=false
-                    // let numOfStudent
                     const subjTaken = sumStudentsScore.filter(score=>score.subject==subject.subject)
                     if(subjTaken.length>0){
                         subjTaken.sort((a, b) => {return b.total -a.total})
-                        // console.log(subjTaken)
                         const numOfStudent=subjTaken.length
                         subjTaken.forEach(function(scr){
                             let student= trimStudentsInClass.find(stud=>stud.roll_num==scr.roll_num)
@@ -183,8 +167,6 @@ export default {
                             scrs.second_ca=scr.second_ca
                             scrs.exam=scr.exam
                             scrs.total=scr.total
-
-
                             if (currentTotal== scr.total){
                                 bracket=true
                                 counter=counter+1
@@ -202,8 +184,6 @@ export default {
                             }
                             currentPosition=scrs.position
                             currentTotal = scrs.total
-
-                            // scrs.position = position
                             scrs.numOfStudent=numOfStudent
                             student.session=scr.session
                             student.term=scr.term

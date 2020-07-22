@@ -44,6 +44,9 @@
                                     </option>
                                 </select>
                             </div>
+                            <div>
+                                <span v-if="error.errParameters" class="err">{{error.errParameters}}</span>
+                            </div>
                             <!-- <div class="form-group col-md-2">
                                 <el-button type="success" icon="el-icon-check" circle class="float-right"></el-button>
                             </div> -->
@@ -195,7 +198,8 @@ export default {
                 errExam:'',
                 errCurrentFirstCA:'',
                 errCurrentSecondCA:'',
-                errCurrentExam:''
+                errCurrentExam:'',
+                errParameters:''
             },
             spinner:false,
             editID:'',
@@ -207,30 +211,7 @@ export default {
     computed:{
         ...mapState(['students','classes','subjects','sessions','scores'])
     },
-    mounted(){
-        // this.getClasses().then(()=>{
-        //     console.log('Classssssssss')
-        //     // console.log(res.data.classes)
-        // })
-        // this.getStudents().then(()=>{
-        //     console.log('studentsssssssssssssssssss')
-        //     // console.log(res.data.students)
-        // })
-        // this.getSubjects().then(()=>{
-        //     console.log('subjectsssssssss')
-        //     // console.log(res.data.subjects)
-        // })
-        // this.getSessions().then(()=>{
-        //     console.log('sesssioonsssss')
-        //     // console.log(res.data.sessions)
-        // })
-        // this.getScores().then(()=>{
-        //     console.log('scoresssss')
-        //     // console.log(res.data.scores)
-        // })
-    },
     methods:{
-        // ...mapActions(['getStudents','getClasses','getSubjects','getSessions','getScores']),
         change(){
             if (this.Sscore.session==''||this.Sscore.term==''||this.Sscore.clas==''||this.Sscore.subject==''){
                 return false
@@ -240,6 +221,14 @@ export default {
             }
         },
         add(){
+            if (this.Sscore.session==''||this.Sscore.term==''||this.Sscore.clas==''||this.Sscore.subject==''){
+                this.error.errParameters='Select from all the parameters above'
+                setTimeout(()=>{
+                    this.error.errParameters=''
+                },4000)
+                return false
+            }
+
             if(this.Sscore.rollNumber==''||this.Sscore.rollNumber.trim()==''){
                 this.error.errRollNum='Enter a Roll number'
                 setTimeout(()=>{
@@ -354,10 +343,8 @@ export default {
                 },4000)
                 return false
             }
-            // console.log(score)
             this.axios.put(baseurl+'/score/'+score.id,this.currentScore)
             .then(res=>{
-                console.log(res.data.newscore)
                 this.scores.splice(this.scores.indexOf(this.initialScore), 1,res.data.newscore)
                 this.subjectScores.splice(this.subjectScores.indexOf(this.initialScore),1,res.data.newscore)
                 this.editDialogVisible=false

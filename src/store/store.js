@@ -19,17 +19,13 @@ export default new Vuex.Store({
     },
     mutations:{
         LOAD_SUBJECTS(state,payload){
-            // console.log(payload.data.subjects)
             state.subjects=payload.data.subjects
         },
         LOAD_CLASSES(state,payload){
-            // console.log(payload.data.classes)
             state.classes=payload.data.classes
         },
         LOAD_SESSIONS(state,payload){
-            // console.log(payload.data.sessions)
             state.sessions= payload.data.sessions
-            // console.log(state.sessions)
         },
         LOAD_STUDENTS(state,payload){
             state.students=payload.data.students
@@ -46,7 +42,6 @@ export default new Vuex.Store({
             return commit('LOAD_CLASSES', await Axios.get(baseurl+'/class'))
         },
         async getSessions({commit}){
-            // console.log('action')
             return commit('LOAD_SESSIONS', await Axios.get(baseurl+'/session'))
         },
         async getStudents({commit}){
