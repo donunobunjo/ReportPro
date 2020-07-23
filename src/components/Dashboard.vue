@@ -1,6 +1,6 @@
 <template>
     <el-container style="height: 500px; border: 1px solid #eee">
-      <b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner>
+      <!-- <b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner> -->
   <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
     <!-- <el-menu :default-openeds="['1', '3']" :router="routing"> -->
     <el-menu :router="routing">
@@ -88,7 +88,7 @@ export default {
   data(){
     return {
       routing:true,
-      spinner:false
+      // spinner:true
     }
   },
   methods:{

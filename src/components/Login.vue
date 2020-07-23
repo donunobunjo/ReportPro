@@ -1,10 +1,11 @@
 <template>
     <div class="container">
+		<b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner>
 	<div class="d-flex justify-content-center h-h00">
 		<div class="card" id="main">
 			<div class="card-header">
 				<h3>Sign In</h3>
-				
+				<b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner>
 			</div>
 			<div class="card-body">
 				<form>
@@ -35,7 +36,11 @@
 
 <script>
 export default {
-	
+	data(){
+		return{
+			spinner:true
+		}
+	}
 }
 </script>
 

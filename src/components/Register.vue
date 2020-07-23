@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+		<b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner>
 	<div class="d-flex justify-content-center h-100">
 		<div class="card" id="main">
 			<div class="card-header">
@@ -44,7 +45,15 @@
 	</div>
 </div>
 </template>
-
+<script>
+export default {
+	data(){
+		return{
+			spinner:true
+		}
+	}
+}
+</script>
 <style scoped>
 	#main{
     /* height: 700px; */
