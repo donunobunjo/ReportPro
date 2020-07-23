@@ -109,6 +109,7 @@ export default {
             this.axios.post(baseurl+'/subject',this.subject)
             .then((res)=>{
                 this.subjects.splice(0,0,res.data.subject)
+                this.subjects.sort((a, b) => (a.subject > b.subject) ? 1 :-1)
                 this.subject.subject=''
                 this.spinner=false
             })

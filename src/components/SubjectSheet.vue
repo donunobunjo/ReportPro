@@ -176,7 +176,8 @@ export default {
                     }
                 })
                 // console.log(studentsPosition)
-                studentsPosition.sort((a,b)=>{return a.fullname-b.fullname})
+                // studentsPosition.sort((a,b)=>{return a.fullname-b.fullname})
+                studentsPosition.sort((a, b) => (a.fullname > b.fullname) ? 1 : (a.fullname === b.fullname) ? ((a.position > b.position) ? 1 : -1) : -1 )
                 this.report = studentsPosition
             }
         }

@@ -86,6 +86,7 @@ export default {
             this.axios.post(baseurl+'/session',this.sesion)
             .then((res)=>{
                 this.sessions.splice(0,0,res.data.session)
+                this.sessions.sort((a, b) => (a.session > b.session) ? 1 :-1)
                 this.sesion.sesion=''
                 this.spinner=false
             })

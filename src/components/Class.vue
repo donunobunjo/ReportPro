@@ -88,6 +88,7 @@ export default {
             this.axios.post(baseurl+'/class',this.classs)
             .then((res)=>{
                 this.classes.splice(0,0,res.data.class)
+                this.classes.sort((a, b) => (a.class > b.class) ? 1 :-1)
                 this.classs.classs=''
                 this.spinner=false
             })
