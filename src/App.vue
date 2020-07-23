@@ -6,14 +6,15 @@
     </div>
     <header id="header">
 				<nav class="left">
-          <a href="index.html" class="logo">ReportPro</a>
+          <!-- <a href="index.html" class="logo">ReportPro</a> -->
+          <a href="/" class="logo">ReportPro</a>
 					<!-- <a href="#menu"><span>Menu</span></a> -->
 				</nav>
 				<!-- <a href="index.html" class="logo">ReportPro</a> -->
 				<nav class="right">
 					<!-- <a href="#" class="button alt">Log in</a> -->
           <router-link to="/login" class="cred">Sign In</router-link>
-          <router-link to="/register" class="cred">Register</router-link>
+          <router-link to="/register" class="cred">Sign Up</router-link>
 				</nav>
 		</header>
     <router-view></router-view>
