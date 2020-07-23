@@ -21,8 +21,8 @@
 							<h3>Links to the repo</h3>
 							<!-- <p>Tristique yonve cursus jam nulla quam<br /> loreipsu gravida adipiscing lorem</p> -->
 							<ul>
-								<li><a href="https://github.com/donunobunjo/ReportProAPI.git" target="_blank" >The API </a> </li>
-								<li><a href="https://github.com/donunobunjo/ReportPro.git" target="_blank">The Front end </a> </li>
+								<li><a href="https://github.com/donunobunjo/ReportProAPI.git" target="_blank" >The API </a> with Laravel</li>
+								<li><a href="https://github.com/donunobunjo/ReportPro.git" target="_blank">The Front end </a> with Vue </li>
 							</ul>
 						</div>
 					</div>
