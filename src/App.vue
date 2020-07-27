@@ -13,18 +13,46 @@
 				<!-- <a href="index.html" class="logo">ReportPro</a> -->
 				<nav class="right">
 					<!-- <a href="#" class="button alt">Log in</a> -->
-          <router-link to="/login" class="cred">Sign In</router-link>
-          <router-link to="/register" class="cred">Sign Up</router-link>
-				</nav>
+          <router-link to="/login" class="cred" v-if="!token">Sign In</router-link>
+          <router-link to="/register" class="cred" v-if="!token">Sign Up</router-link>
+          <span v-if="token">Welcome, {{name}}</span>
+          <router-link to="/dashboard" class="cred" v-if="token">DashBoard</router-link>
+          <button @click.prevent="logout" class="btn btn-link" v-if="token">logout</button>
+        </nav>
 		</header>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-
+import {mapState} from 'vuex'
 export default {
-  name: 'App',
+    name: 'App',
+    data(){
+      return{
+        
+      }
+    },
+    computed:{
+      ...mapState(['name','token','role', 'logged'])
+    },
+    methods:{
+      logout(){
+           this.$store.dispatch('logout')
+        .then(() => {
+          this.$router.push({name:'home'})
+        })
+      }
+    },
+    // mounted(){
+    //   console.log(this.name)
+    // },
+    beforeRouteEnter (to, from, next) { 
+            if (localStorage.getItem('token')) {
+                return next('/dashboard');
+            }
+            next();
+    }
   }
 </script>
 

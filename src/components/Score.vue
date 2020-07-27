@@ -213,6 +213,7 @@ export default {
     },
     methods:{
         change(){
+            // console.log(this.scores)
             if (this.Sscore.session==''||this.Sscore.term==''||this.Sscore.clas==''||this.Sscore.subject==''){
                 return false
             }

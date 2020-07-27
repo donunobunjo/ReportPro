@@ -65,7 +65,17 @@
 
 <script>
 export default {
-    
+    data(){
+		return {
+			
+		}
+	},
+	// beforeRouteEnter (to, from, next) { 
+    //         if (localStorage.getItem('token')) {
+    //             return next('/dashboard');
+    //         }
+    //         next();
+    // }
 }
 </script>
 

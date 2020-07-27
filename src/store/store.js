@@ -5,14 +5,21 @@ import VueAxios from 'vue-axios'
 import baseurl from '../components/baseURL'
 Vue.use(Vuex)
 Vue.use(VueAxios,Axios)
-
+const debug = process.env.NODE_ENV !== 'production';
 export default new Vuex.Store({
     state:{
         subjects:[],
         classes:[],
         sessions:[],
         students:[],
-        scores:[]
+        scores:[],
+        token: localStorage.getItem('token')||null,
+        name : localStorage.getItem('name')||null,
+        role : localStorage.getItem('role')||null,
+        // token:'',
+        // name:'',
+        // role:'',
+        // logged:false
     },
     getters:{
 
@@ -32,6 +39,22 @@ export default new Vuex.Store({
         },
         LOAD_SCORES(state, payload){
             state.scores=payload.data.scores
+        },
+        REGISTER(state, payload){
+            // console.log(payload.data.name)
+            state.name=payload.data.name
+            state.token=payload.data.token
+            state.role=payload.data.role
+        },
+        LOGIN(state,payload){
+            state.name=payload.data.name
+            state.token=payload.data.token
+            state.role=payload.data.role
+        },
+        LOGOUT(state){
+            state.token = null
+            state.name= null
+            state.role=null
         }
     },
     actions:{
@@ -49,7 +72,62 @@ export default new Vuex.Store({
         },
         async getScores({commit}){
             return commit('LOAD_SCORES', await Axios.get(baseurl+'/score'))
-        }
-
-    }
-})
+        },
+        register({commit},profile){
+            return new Promise((resolve, reject) => {
+                Axios.post(baseurl+'/register', profile)
+                .then(resp => {
+                  const token = resp.data.token
+                  const name = resp.data.name
+                  const role = resp.data.role
+                  localStorage.setItem('token', token)
+                  localStorage.setItem('name',name)
+                  localStorage.setItem('role',role)
+                  Axios.defaults.headers.common['Authorization'] = 'Bearer '+ token
+                  commit('REGISTER', resp)
+                  resolve(resp)
+                })
+                .catch(err => {
+                  localStorage.removeItem('token')
+                  localStorage.removeItem('name')
+                  localStorage.removeItem('role')
+                  reject(err)
+                })
+              })
+            },
+            login({commit},credentials){
+                return new Promise((resolve, reject) => {
+                    Axios.post(baseurl+'/login', credentials)
+                    .then(resp => {
+                      const token = resp.data.token
+                      const name = resp.data.name
+                      const role = resp.data.role
+                      localStorage.setItem('token', token)
+                      localStorage.setItem('name',name)
+                      localStorage.setItem('role',role)
+                      Axios.defaults.headers.common['Authorization'] = 'Bearer '+ token
+                      commit('LOGIN', resp)
+                      resolve(resp)
+                    })
+                    .catch(err => {
+                      localStorage.removeItem('token')
+                      localStorage.removeItem('name')
+                      localStorage.removeItem('role')
+                      reject(err)
+                    })
+                  })
+            },
+            logout({commit}){
+                return new Promise((resolve, reject) => {
+                    commit('LOGOUT')
+                    localStorage.removeItem('token')
+                    localStorage.removeItem('name')
+                    localStorage.removeItem('role')
+                    delete Axios.defaults.headers.common['Authorization']
+                    resolve()
+                    reject()
+                  })
+            }
+        },
+    strict: debug
+});

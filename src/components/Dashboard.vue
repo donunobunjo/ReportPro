@@ -94,6 +94,11 @@ export default {
   methods:{
     ...mapActions(['getStudents','getClasses','getSubjects','getSessions','getScores'])
   },
+  beforeMount() {
+      let token = localStorage.getItem('token')
+        this.axios.defaults.headers.common['Content-Type'] = 'application/json'
+        this.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
+  },
   mounted(){
       this.spinner=true
       this.getClasses()

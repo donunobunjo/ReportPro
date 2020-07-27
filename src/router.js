@@ -30,6 +30,7 @@ export default [
         name:'dashboard',
         path:'/dashboard',
         component:Dashboard,
+        // component:DashboardHome,
         children:[
             {path:'',component:DashboardHome},
             {path:'student',component:Student},
@@ -39,6 +40,15 @@ export default [
             { path:'score', component:Score},
             { path:'termlyreport' ,component:ReportSheet},
             { path:'subjectsheet' ,component:SubjectSheet}
-        ]
+        ],
+        beforeEnter:function(to,from,next){
+            if (localStorage.getItem('token')==null){
+                //next(false)
+                next({name:'login'})
+            }
+            else{
+              next()
+            }
+        }
     }
 ]
