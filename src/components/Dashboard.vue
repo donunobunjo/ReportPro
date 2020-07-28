@@ -9,8 +9,8 @@
         <el-menu-item-group>
           <template slot="title">New</template>
           <el-menu-item index="1-1" route="/dashboard/student">Student</el-menu-item>
-          <!-- <el-menu-item index="1-2" route="/dashboard/subject">Subject</el-menu-item>
-          <el-menu-item index="1-3" route="/dashboard/class">Class</el-menu-item>
+          <el-menu-item index="1-2" route="/dashboard/search">Search</el-menu-item>
+          <!-- <el-menu-item index="1-3" route="/dashboard/class">Class</el-menu-item>
           <el-menu-item index="1-4" route="/dashboard/session">Session</el-menu-item> -->
           
         </el-menu-item-group>
@@ -55,7 +55,7 @@
   
   <el-container>
     <el-header style="text-align: right; font-size: 12px">
-      <el-dropdown>
+      <!-- <el-dropdown>
         <i class="el-icon-setting" style="margin-right: 15px"></i>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>View</el-dropdown-item>
@@ -63,7 +63,8 @@
           <el-dropdown-item>Delete</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <span>Tom</span>
+      <span>Tom</span> -->
+      .
     </el-header>
     
     <el-main>

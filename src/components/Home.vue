@@ -52,9 +52,7 @@
 								<hr>
 								<li>VueJS</li>
 								<hr>
-								<li>Passport</li>
-								<hr>
-								<li>Rest API's</li>
+								<li>Rest API</li>
 							</ul>
 						</div>
 					</div>

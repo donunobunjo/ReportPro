@@ -6,6 +6,7 @@
 			<div class="card-header">
 				<h3>Sign In</h3>
 				<b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner>
+				<span v-if="error.errMsg" class="err">{{error.errMsg}}</span>
 			</div>
 			<div class="card-body">
 				<form>
@@ -20,7 +21,7 @@
 						<div class="input-group-prepend">
 							<span class="icon input-group-text fa-lock"></span>
 						</div>
-						<input type="text" class="form-control" placeholder="password" v-model="credentials.password"><br>
+						<input type="password" class="form-control" placeholder="password" v-model="credentials.password"><br>
 						<span v-if="error.errPassword" class="err">{{error.errPassword}}</span>
 					</div>
 					<div class="form-group">
@@ -46,7 +47,8 @@ export default {
 			},
 			error:{
 				errEmail:'',
-				errPassword:''
+				errPassword:'',
+				errMsg:''
 			},
 			spinner:false,
 			// reg: '/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/'
@@ -55,8 +57,6 @@ export default {
 	methods:{
 		// ...mapActions(['login']),
 		login(){
-			// console.log('kakaka')
-			
 			if(this.credentials.email==''||this.credentials.email.trim()==''){
                 this.error.errEmail='Enter your email'
                 setTimeout(()=>{
@@ -82,16 +82,25 @@ export default {
 			}
 			this.spinner=true
 			this.$store.dispatch('login', this.credentials)
-                    .then((res) => {
-						this.spinner=false
-						console.log(res.data)
+                    .then((resp) => {
+						if (resp.data.msg=='success'){
+							this.spinner=false
+							console.log('clean')
+							this.$router.push({name:'dashboard'})
+						}
+						else{
+							console.log('error1')
+						}
 						
-                        this.$router.push({name:'dashboard'})
                     })
-                    .catch(err => {
-                        console.log(err)
-                        this.spinner=false
-                    })
+                    .catch(() => {
+						//Invalid credentials
+						this.error.errMsg='Unauthorized user'
+						setTimeout(()=>{
+							this.error.errMsg=''
+						},10000)
+						this.spinner=false
+					})
 		}
 	}
 }

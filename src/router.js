@@ -10,6 +10,7 @@ import Session from './components/Session.vue'
 import Score from './components/Score.vue'
 import ReportSheet from './components/ReportSheet.vue'
 import SubjectSheet from './components/SubjectSheet.vue'
+import Search from './components/Search.vue'
 export default [
     {
         name:'home',
@@ -39,7 +40,8 @@ export default [
             { path:'session', component:Session},
             { path:'score', component:Score},
             { path:'termlyreport' ,component:ReportSheet},
-            { path:'subjectsheet' ,component:SubjectSheet}
+            { path:'subjectsheet' ,component:SubjectSheet},
+            { path:'search', component:Search}
         ],
         beforeEnter:function(to,from,next){
             if (localStorage.getItem('token')==null){

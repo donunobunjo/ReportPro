@@ -63,6 +63,7 @@ export default {
 			},
 			spinner:false,
 			error:{
+				errMsg:'',
 				errName:'',
 				errEmail:'',
 				errPassword:'',
@@ -125,18 +126,27 @@ export default {
                 return false 
 			}
 			this.spinner=true
-					
-                    this.$store.dispatch('register', this.profile)
-                    .then((res) => {
-						this.spinner=false
-						console.log(res.data)
-						
-                        this.$router.push({name:'dashboard'})
-                    })
-                    .catch(err => {
-                        console.log(err)
-                        this.spinner=false
-                    })
+			this.$store.dispatch('register', this.profile)
+            .then((resp) => {
+				if(resp.data.msg=='success')
+				{
+					this.spinner=false
+					console.log('no wahala')
+					this.$router.push({name:'dashboard'})
+				}
+				else{
+					this.spinner=false
+					console.log('yawa don gassss 1')
+				}
+            })
+            .catch(() => {
+				//duplicates
+				this.error.errMsg='A user with this email already exist'
+                setTimeout(()=>{
+                    this.error.errMsg=''
+                },10000)
+				this.spinner=false
+            })
 		}
 	}
 }
