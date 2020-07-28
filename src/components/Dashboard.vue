@@ -84,13 +84,16 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapActions,mapState} from 'vuex'
 export default {
   data(){
     return {
       routing:true,
       // spinner:true
     }
+  },
+  computed:{
+    ...mapState(['scores'])
   },
   methods:{
     ...mapActions(['getStudents','getClasses','getSubjects','getSessions','getScores'])
@@ -101,24 +104,30 @@ export default {
         this.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
   },
   mounted(){
-      this.spinner=true
-      this.getClasses()
-        .then(
-          this.getStudents()
-            .then(
-              this.getSubjects()
-                .then(
-                  this.getSessions()
-                    .then(
+      // if (this.scores.length<1){
+            this.spinner=true
+            this.getClasses()
+              .then(()=>{
+                this.getStudents()
+              })
+                .then(()=>{
+                  this.getSubjects()
+                })
+                  .then(()=>{
+                    this.getSessions()
+                  })
+                    .then(()=>{
                       this.getScores()
-                        .then(
-                          this.spinner=false
-                        )
-                    )
-                )
-            )
-        )
-      
+                    })
+                      .then(()=>{
+                        this.spinner=false
+                      })
+        // console.log('not loaded')                
+      // }
+      // else{
+      //   console.log('loaded')
+      // }
+     
   }
 }
 </script>
