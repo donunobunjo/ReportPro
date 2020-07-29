@@ -5,14 +5,23 @@
             <div class="card card-default col-md-12">
                 <div class="card-header">
                     <h3>Search</h3>
+                     <div>
+                        <el-input
+                            placeholder="Search ..."
+                            suffix-icon="el-icon-search"
+                            v-model="searchQuery">
+                        </el-input>
+                    </div>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <!-- <form>
                          <div class="wrapper" style="position: relative;">
                             <i class="fa fa-search" style="position: absolute; top: 10px; left: 165px;"></i>
                             <input type="text" placeholder="Search ..." v-model="searchQuery">
                         </div>
-                    </form>
+                    </form> -->
+                   
+                    
                     <hr>
                     <div class="tbl table-responsive">
                         <table class="table table-striped">
@@ -36,8 +45,8 @@
                                     <td>{{student.fullname}}</td>
                                     <td>{{student.class}}</td>
                                     <td>
-                                        <el-button type="primary" icon="el-icon-search" circle @click.prevent="studInfo(student)"></el-button>
-                                        <el-button type="danger" icon="el-icon-delete" circle  @click.prevent="studScore(student)"></el-button>
+                                        <el-button type="primary" icon="el-icon-info" circle @click.prevent="studInfo(student)"></el-button>
+                                        <el-button type="primary" icon="el-icon-files" circle  @click.prevent="studScore(student)"></el-button>
                                     </td>
                                     <el-dialog v-if="viewID" :visible.sync="viewDialogVisible">
                                         <form>
