@@ -257,6 +257,7 @@ export default {
             if(this.Sscore.first_ca==''||this.Sscore.first_ca.trim=='')
             {
                 this.Sscore.first_ca=0
+                
             }
             else if(this.Sscore.first_ca<0||this.Sscore.first_ca>20){
                 this.error.errFirstCA='First C.A. can only be between 0 and 20'
@@ -275,6 +276,7 @@ export default {
                 setTimeout(()=>{
                     this.error.errSecondCA=''
                 },4000)
+                return false
             }
 
             if(this.Sscore.exam==''||this.Sscore.exam.trim=='')
@@ -286,7 +288,9 @@ export default {
                 setTimeout(()=>{
                     this.error.errExam=''
                 },4000)
+                return false
             }
+            
             this.axios.post(baseurl+'/score',this.Sscore)
             .then((res)=>{
                 this.scores.splice(0,0,res.data.score)
