@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "node server.js"
   },
   "dependencies": {
     "axios": "^0.19.2",
@@ -13,8 +14,10 @@
     "bootstrap-vue": "^2.15.0",
     "core-js": "^3.6.4",
     "element-ui": "^2.13.2",
+    "express": "^4.17.1",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.1",
+    "serve-static": "^1.14.1",
     "sweetalert": "^2.1.2",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
