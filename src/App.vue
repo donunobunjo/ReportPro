@@ -8,16 +8,20 @@
 				<nav class="left">
           <!-- <a href="index.html" class="logo">ReportPro</a> -->
           <a href="/" class="logo">ReportPro</a>
-					<!-- <a href="#menu"><span>Menu</span></a> -->
-				</nav>
-				<!-- <a href="index.html" class="logo">ReportPro</a> -->
-				<nav class="right">
-					<!-- <a href="#" class="button alt">Log in</a> -->
           <router-link to="/login" class="cred" v-if="!token">Sign In</router-link>
           <router-link to="/register" class="cred" v-if="!token">Sign Up</router-link>
           <span v-if="token">Welcome, {{name}}</span>
           <router-link to="/dashboard" class="cred" v-if="token">DashBoard</router-link>
           <button @click.prevent="logout" class="btn btn-link" v-if="token">logout</button>
+					<!-- <a href="#menu"><span>Menu</span></a> -->
+				</nav>
+				<!-- <a href="index.html" class="logo">ReportPro</a> -->
+				<nav class="right">
+					<!-- <router-link to="/login" class="cred" v-if="!token">Sign In</router-link>
+          <router-link to="/register" class="cred" v-if="!token">Sign Up</router-link>
+          <span v-if="token">Welcome, {{name}}</span>
+          <router-link to="/dashboard" class="cred" v-if="token">DashBoard</router-link>
+          <button @click.prevent="logout" class="btn btn-link" v-if="token">logout</button> -->
         </nav>
 		</header>
     <router-view></router-view>
