@@ -2,7 +2,7 @@
     <div>
         <!-- <h1>Search</h1> -->
         <div class="row justify-content-center">
-            <div class="card card-default col-md-12">
+            <div class="card card-default col-md-8">
                 <div class="card-header">
                     <h3>Search</h3>
                      <div>

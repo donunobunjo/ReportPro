@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="card card-default col-md-8">
                 <div class="card-header">
-                    <h3>Register new session</h3>
+                    <h3>Setup new session</h3>
                 </div>
                 <div class="card-body">
                     <form id="frm">

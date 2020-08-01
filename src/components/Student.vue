@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row justify-content-center">
-            <div class="card card-default col-md-12">
+            <div class="card card-default col-md-8">
                 <div class="card-header">
                     <h3>Register Student</h3>
                 </div>
