@@ -60,9 +60,7 @@ export default new Vuex.Store({
             state.subjects.splice(0,0,payload.data.subject)
             state.subjects.sort((a, b) => (a.subject > b.subject) ? 1 :-1)
         },
-        UPDATE_SUBJECT(state,payload){
-            
-        }
+       
     },
     actions:{
         async getSubjects({commit}){
