@@ -9,6 +9,7 @@
                     <form id="frm">
                         <div class="row form-group">
                             <label for="subject">Session</label>
+                            <span class="ast">*</span>
                             <input type="text" id="session" class="form-control frminput" placeholder="New session ..." v-model='sesion.sesion' @input="sesion.sesion=$event.target.value.toUpperCase()"> 
                             <span v-if="error.errSession" class="err">{{error.errSession}}</span>
                         </div>
@@ -99,7 +100,7 @@ export default {
     .frminput{
             border-radius: 30px;
     }
-    .err{
+    .err,.ast{
         color: red;
     }
     

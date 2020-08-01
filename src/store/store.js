@@ -55,6 +55,13 @@ export default new Vuex.Store({
             state.token = null
             state.name= null
             state.role=null
+        },
+        ADD_SUBJECT(state,payload){
+            state.subjects.splice(0,0,payload.data.subject)
+            state.subjects.sort((a, b) => (a.subject > b.subject) ? 1 :-1)
+        },
+        UPDATE_SUBJECT(state,payload){
+            
         }
     },
     actions:{
@@ -72,6 +79,12 @@ export default new Vuex.Store({
         },
         async getScores({commit}){
             return commit('LOAD_SCORES', await Axios.get(baseurl+'/score'))
+        },
+        async addSubject({commit},subject){
+            return commit('ADD_SUBJECT', await Axios.post(baseurl+'/subject',subject))
+        },
+        async updateSubject({commit},subject){
+            return commit('UPDATE_SUBJECT', await Axios.put(baseurl+'/subject',subject))
         },
         register({commit},profile){
             return new Promise((resolve, reject) => {

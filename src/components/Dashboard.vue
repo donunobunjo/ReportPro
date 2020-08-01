@@ -131,5 +131,7 @@ export default {
 </script>
 
 <style scoped>
-  
+   .container{
+       height: 100px;
+   }
 </style>

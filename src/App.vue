@@ -75,4 +75,16 @@ export default {
 .cred{
   margin: 5px;
 }
+#header .logo {
+    color: #f6755e;
+			font-family: "Pacifico", cursive;
+			font-size: 2.5em;
+			letter-spacing: 2px;
+			margin-top: -5px;
+			text-decoration: none;
+      display: inline-block;
+      /* font-size: 1.25em; */
+      font-size: 2.50em;
+			text-align: left;
+}
 </style>

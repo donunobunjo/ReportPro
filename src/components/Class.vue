@@ -1,14 +1,14 @@
 <template>
     <div>
         <div class="row justify-content-center">
-            <div class="card card-default col-md-8">
+            <div class="card card-default col-md-10">
                 <div class="card-header">
                     <h3>Setup new class</h3>
                 </div>
                 <div class="card-body">
                     <form id="frm">
                         <div class="row form-group">
-                            <label for="class">Class</label>
+                            <label for="class">Class</label><span class="ast">*</span>
                             <input type="text" id="class" class="form-control frminput" placeholder="New class ..." v-model='classs.classs' @input="classs.classs=$event.target.value.toUpperCase()">
                             <span v-if="error.errClass" class="err">{{error.errClass}}</span>
                         </div>
@@ -102,7 +102,7 @@ export default {
     .frminput{
             border-radius: 30px;
     }
-    .err{
+    .err,.ast{
         color: red;
     }
 </style>

@@ -1,7 +1,10 @@
 <template>
     <div>
+        <!-- <div class="row col-md-12">
+            .
+        </div> -->
         <div class="row justify-content-center">
-            <div class="card card-default col-md-8">
+            <div class="card card-default col-md-10">
                 <div class="card-header">
                     <h3>Setup new subject</h3>
                 </div>
@@ -9,6 +12,7 @@
                     <form id="frm">
                         <div class="row form-group">
                             <label for="subject">Subject</label>
+                            <span class="ast">*</span>
                             <input type="text" id="subject" class="form-control frminput" placeholder="New subject ..." v-model.trim='subject.subject' @input="subject.subject=$event.target.value.toUpperCase()">
                             <span v-if="error.errSubject" class="err">{{error.errSubject}}</span>
                         </div>
@@ -66,7 +70,7 @@
 <script>
 import baseurl from './baseURL';
 import swal from 'sweetalert';
-import {mapState} from 'vuex'
+import {mapState,mapActions} from 'vuex'
 export default {
     data () {
         return {
@@ -89,6 +93,7 @@ export default {
         
     },
     methods:{
+        ...mapActions(['addSubject']),
         add(){
             if(this.subject.subject==''||this.subject.subject.trim()==''){
                 this.error.errSubject='Enter a subject'
@@ -106,13 +111,18 @@ export default {
                 return false 
             }
             this.spinner=true
-            this.axios.post(baseurl+'/subject',this.subject)
-            .then((res)=>{
-                this.subjects.splice(0,0,res.data.subject)
-                this.subjects.sort((a, b) => (a.subject > b.subject) ? 1 :-1)
-                this.subject.subject=''
-                this.spinner=false
-            })
+            // this.axios.post(baseurl+'/subject',this.subject)
+            // .then((res)=>{
+            //     this.subjects.splice(0,0,res.data.subject)
+            //     this.subjects.sort((a, b) => (a.subject > b.subject) ? 1 :-1)
+            //     this.subject.subject=''
+            //     this.spinner=false
+            // })
+            this.addSubject(this.subject)
+             .then(()=>{
+                 this.spinner=false
+                 this.subject.subject=''
+             })
         },
         edit(subject){
             this.editID= subject.id
@@ -178,7 +188,7 @@ export default {
     .frminput{
             border-radius: 30px;
     }
-    .err{
+    .err,.ast{
         color: red;
     }
     .dia{

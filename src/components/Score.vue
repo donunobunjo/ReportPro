@@ -9,7 +9,7 @@
                     <form>
                         <div class="form-row">
                             <div class="form-group col-md-3">
-                                Session
+                                Session<span class="ast">*</span>
                                 <select id="state" class="form-control" @change="change" v-model="Sscore.session">
                                     <option selected disabled value="">Session ...</option>
                                     <option v-for="sesion in sessions" :key="sesion.id">
@@ -18,7 +18,7 @@
                                 </select>
                             </div>
                              <div class="form-group col-md-2">
-                                Term
+                                Term<span class="ast">*</span>
                                 <select id="state" class="form-control" @change="change" v-model="Sscore.term">
                                     <option selected disabled value="">Term ...</option>
                                     <option value='1'>1</option>
@@ -27,7 +27,7 @@
                                 </select>
                             </div>
                              <div class="form-group col-md-2">
-                                Class
+                                Class<span class="ast">*</span>
                                 <select id="classs" class="form-control" @change="change" v-model="Sscore.clas">
                                     <option selected disabled value="">Class ...</option>
                                     <option v-for="classs in classes" :key="classs.id">
@@ -36,7 +36,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
-                                Subject
+                                Subject<span class="ast">*</span>
                                 <select id="subject" class="form-control" @change="change" v-model="Sscore.subject">
                                     <option selected disabled value="">Subject ...</option>
                                     <option v-for="subject in subjects"  :key="subject.id">
@@ -57,12 +57,13 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="rollNum">Roll Number</label>
+                                <span class="ast">*</span>
                                 <input type="text" class="form-control" id="rollNum" @blur="rollLeave" @focus="rollEnter" v-model="Sscore.rollNumber" placeholder="Roll number ..." @input="Sscore.rollNumber=$event.target.value.toUpperCase()">
                                 <span v-if="error.errRollNum" class="err">{{error.errRollNum}}</span>
                             </div>
                              <div class="form-group col-md-8">
-                                <label>Name</label>
-                                <input type="text" readonly v-model="Sscore.studentName">
+                                <label id ='sname'>{{Sscore.studentName}}</label>
+                                <!-- <input type="text" readonly v-model="Sscore.studentName"> -->
                             </div>
                         </div>
                         <div class="form-row">
@@ -406,7 +407,10 @@ export default {
     .frminput{
             border-radius: 30px;
     }
-    .err{
+    .err,.ast{
         color: red;
+    }
+    #sname{
+        color:green;
     }
 </style>
