@@ -413,4 +413,5 @@ export default {
     #sname{
         color:green;
     }
+    
 </style>

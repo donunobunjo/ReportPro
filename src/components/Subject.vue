@@ -194,4 +194,7 @@ export default {
     .dia{
         margin-bottom: 20px;
     }
+    .success{
+        color: green;
+    }
 </style>

@@ -59,7 +59,7 @@ export default new Vuex.Store({
         ADD_SUBJECT(state,payload){
             state.subjects.splice(0,0,payload.data.subject)
             state.subjects.sort((a, b) => (a.subject > b.subject) ? 1 :-1)
-        },
+        }
        
     },
     actions:{
