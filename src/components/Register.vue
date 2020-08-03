@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-		<b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner>
+		<!-- <b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner> -->
 		<span v-if="error.errMsg" class="err">{{error.errMsg}}</span>
 	<div class="d-flex justify-content-center h-100">
 		<div class="card" id="main">
@@ -40,7 +40,8 @@
 						<span v-if="error.errCPassword" class="err">{{error.errCPassword}}</span>
 					</div>
 					<div class="form-group">
-						<input type="button" value="Sign Up" class="btn btn-primary float-right" @click.prevent="register">
+						<!-- <input type="button" value="Sign Up" class="btn btn-primary float-right" @click.prevent="register"> -->
+						<button class="btn btn-primary float-right" @click.prevent="register">{{isSigningUp ? 'please Wait ...' : 'Sign Up'}}</button>
 					</div>
 				</form>
 			</div>
@@ -61,7 +62,8 @@ export default {
 				cpassword:'',
 				role:'user'
 			},
-			spinner:false,
+			// spinner:false,
+			isSigningUp:false,
 			error:{
 				errMsg:'',
 				errName:'',
@@ -125,18 +127,18 @@ export default {
                 },4000)
                 return false 
 			}
-			this.spinner=true
+			// this.spinner=true
+			this.isSigningUp=true
 			this.$store.dispatch('register', this.profile)
             .then((resp) => {
 				if(resp.data.msg=='success')
 				{
-					this.spinner=false
-					console.log('no wahala')
+					// this.spinner=false
 					this.$router.push({name:'dashboard'})
 				}
 				else{
-					this.spinner=false
-					console.log('yawa don gassss 1')
+					// this.spinner=false
+					this.isSigningUp=false
 				}
             })
             .catch(() => {
@@ -145,7 +147,8 @@ export default {
                 setTimeout(()=>{
                     this.error.errMsg=''
                 },10000)
-				this.spinner=false
+				// this.spinner=false
+				this.isSigningUp=false
             })
 		}
 	}

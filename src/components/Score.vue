@@ -84,7 +84,7 @@
                             </div>
                             <!-- <span v-if="error.errEmpty" class="err">{{error.errEmpty}}</span> -->
                             <div class="col-md-3">
-                                <el-button type="success" @click="add" icon="el-icon-check" circle class="float-right">Add</el-button>
+                                <el-button type="success" @click="add" icon="el-icon-check" circle class="float-right">{{isSaving ? 'please Wait ...' : 'Save'}}</el-button>
                             </div>
                         </div>
                     </form>
@@ -203,6 +203,7 @@ export default {
                 errParameters:''
             },
             spinner:false,
+            isSaving:false,
             editID:'',
             initialScore:{},
             currentScore:{},
@@ -291,7 +292,7 @@ export default {
                 },4000)
                 return false
             }
-            
+            this.isSaving=true
             this.axios.post(baseurl+'/score',this.Sscore)
             .then((res)=>{
                 this.scores.splice(0,0,res.data.score)
@@ -301,6 +302,7 @@ export default {
                 this.Sscore.first_ca =''
                 this.Sscore.second_ca=''
                 this.Sscore.exam=''
+                this.isSaving=false
             })
         },
         edit(score){

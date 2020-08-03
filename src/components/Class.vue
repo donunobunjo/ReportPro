@@ -15,7 +15,7 @@
                         <div class="form-group">
                             <el-row>
                                 <b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner>
-                                <el-button type="success" @click="add" icon="el-icon-check" circle class="float-right">Add</el-button>
+                                <el-button type="success" @click="add" icon="el-icon-check" circle class="float-right">{{isSaving ? 'please Wait ...' : 'Save'}}</el-button>
                             </el-row>>
                         </div>
                     </form>
@@ -60,6 +60,7 @@ export default {
             currentClass:{},
             editDialogVisible:false,
             spinner:false,
+            isSaving:false
         }   
     },
     computed:{
@@ -84,13 +85,14 @@ export default {
                 return false 
             }
             this.spinner=true
-
+            this.isSaving=true
             this.axios.post(baseurl+'/class',this.classs)
             .then((res)=>{
                 this.classes.splice(0,0,res.data.class)
                 this.classes.sort((a, b) => (a.class > b.class) ? 1 :-1)
                 this.classs.classs=''
                 this.spinner=false
+                this.isSaving=false
             })
         },
     }

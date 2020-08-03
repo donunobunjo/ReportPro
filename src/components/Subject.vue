@@ -19,7 +19,7 @@
                         <div class="form-group">
                             <el-row>
                                 <b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner>
-                                <el-button type="success" @click="add" icon="el-icon-check" circle class="float-right">Add</el-button>
+                                <el-button type="success" @click="add" icon="el-icon-check" circle class="float-right">{{isSaving ? 'please Wait ...' : 'Save'}}</el-button>
                             </el-row>>
                         </div>
                     </form>
@@ -82,6 +82,7 @@ export default {
                 errCurrentSubject:''
             },
             spinner:false,
+            isSaving:false,
             editID:'',
             initialSubject:{},
             currentSubject:{},
@@ -111,6 +112,7 @@ export default {
                 return false 
             }
             this.spinner=true
+            this.isSaving=true
             // this.axios.post(baseurl+'/subject',this.subject)
             // .then((res)=>{
             //     this.subjects.splice(0,0,res.data.subject)
@@ -121,6 +123,7 @@ export default {
             this.addSubject(this.subject)
              .then(()=>{
                  this.spinner=false
+                 this.isSaving=false
                  this.subject.subject=''
              })
         },

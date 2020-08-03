@@ -1,11 +1,11 @@
 <template>
     <div class="container">
-		<b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner>
+		<!-- <b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner> -->
 	<div class="d-flex justify-content-center h-h00">
 		<div class="card" id="main">
 			<div class="card-header">
 				<h3>Sign In</h3>
-				<b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner>
+				<!-- <b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner> -->
 				<span v-if="error.errMsg" class="err">{{error.errMsg}}</span>
 			</div>
 			<div class="card-body">
@@ -25,7 +25,8 @@
 						<span v-if="error.errPassword" class="err">{{error.errPassword}}</span>
 					</div>
 					<div class="form-group">
-						<input type="button" value="Sign In" class="btn btn-primary float-right" @click.prevent="login">
+						<!-- <input type="button" value="Sign In" class="btn btn-primary float-right" @click.prevent="login"> -->
+						<button class="btn btn-primary float-right" @click.prevent="login">{{isSigningIn ? 'please Wait ...' : 'Sign In'}}</button>
 					</div>
 				</form>
 			</div>
@@ -50,7 +51,8 @@ export default {
 				errPassword:'',
 				errMsg:''
 			},
-			spinner:false,
+			// spinner:false,
+			isSigningIn:false,
 			// reg: '/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/'
 		}
 	},
@@ -80,26 +82,23 @@ export default {
                 },4000)
 				return false 
 			}
-			this.spinner=true
+			this.isSigningIn=true
+			// this.spinner=true
 			this.$store.dispatch('login', this.credentials)
                     .then((resp) => {
 						if (resp.data.msg=='success'){
-							this.spinner=false
-							console.log('clean')
+							// this.spinner=false
 							this.$router.push({name:'dashboard'})
 						}
-						else{
-							console.log('error1')
-						}
-						
-                    })
+					})
                     .catch(() => {
 						//Invalid credentials
 						this.error.errMsg='Unauthorized user'
 						setTimeout(()=>{
 							this.error.errMsg=''
 						},10000)
-						this.spinner=false
+						// this.spinner=false
+						this.isSigningIn=false
 					})
 		}
 	}

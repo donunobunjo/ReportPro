@@ -45,7 +45,7 @@
                         <div class="form-group">
                             <el-row>
                                 <b-spinner type="grow" label="Busy" v-if="spinner"></b-spinner>
-                                <el-button type="success" @click="add" icon="el-icon-check" circle class="float-right">Add</el-button>
+                                <el-button type="success" @click="add" icon="el-icon-check" circle class="float-right">{{isSaving ? 'please Wait ...' : 'Save'}}</el-button>
                             </el-row>>
                         </div>
                     </form>
@@ -166,6 +166,7 @@ export default {
             },
             studs:[],
             spinner:false,
+            isSaving:false,
             editID:'',
             initialStudent:{},
             currentStudent:{},
@@ -221,6 +222,7 @@ export default {
                 },4000)
                 return false 
             }
+            this.isSaving=true
             this.axios.post(baseurl+'/student',this.student)
             .then((res)=>{
                 this.students.splice(0,0,res.data.student)
@@ -230,6 +232,7 @@ export default {
                 this.student.dob =''
                 this.student.class=''
                 this.student.gender='Male'
+                this.isSaving=false
             })
         },
         edit(student){
